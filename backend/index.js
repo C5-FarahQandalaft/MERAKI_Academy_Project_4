@@ -12,7 +12,10 @@ app.use(express.json());
 // Import Routers
 
 // Routes Middleware
-
+app.use("/jobs");
+app.use("/users");
+app.use("/login");
+app.use("/comment");
 // Handles any other endpoints [unassigned - endpoints]
 app.use("*", (req, res) => res.status(404).json("NO content at this path"));
 
