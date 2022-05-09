@@ -11,10 +11,11 @@ app.use(express.json());
 
 // Import Routers
 const jobsRouter = require("./routes/jobs");
+const usersRouter = require("./routes/users");
 
 // Routes Middleware
 app.use("/jobs", jobsRouter);
-// app.use("/users");
+app.use("/users",usersRouter);
 // app.use("/login");
 // app.use("/comment");
 
