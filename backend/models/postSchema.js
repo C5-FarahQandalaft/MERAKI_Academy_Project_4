@@ -10,7 +10,7 @@ const postSchema = new Schema({
   applicants: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Applicant",
+      ref: "Employee",
     },
   ],
   company: {
