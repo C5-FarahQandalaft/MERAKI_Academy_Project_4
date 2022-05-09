@@ -14,7 +14,7 @@ usersRouter.post("/createCompany");
 // get all applied jobs
 usersRouter.get("/appliedjob");
 
-// add post to the applied job
+// add post by id to the applied job section
 usersRouter.post("/appliedjob/:id");
 
 // get company posts

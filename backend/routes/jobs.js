@@ -11,16 +11,16 @@ jobsRouter.get("/");
 // create post
 jobsRouter.post("/createPost");
 
-// update post
+// update post by id
 jobsRouter.put("/updatePost/:id");
 
-// delete post
+// delete post by id
 jobsRouter.delete("/deletePost/:id");
 
-// get posts by company
+// get posts by company name
 jobsRouter.get("/search_1/:name");
 
-// get posts by title
+// get posts by post title
 jobsRouter.get("/search_2/:title");
 
 module.exports = jobsRouter;
