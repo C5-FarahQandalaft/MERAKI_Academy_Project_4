@@ -12,11 +12,12 @@ app.use(express.json());
 // Import Routers
 const jobsRouter = require("./routes/jobs");
 const usersRouter = require("./routes/users");
+const loginRouter = require("./routes/login");
 
 // Routes Middleware
 app.use("/jobs", jobsRouter);
 app.use("/users",usersRouter);
-// app.use("/login");
+app.use("/login",loginRouter);
 // app.use("/comment");
 
 // Handles any other endpoints [unassigned - endpoints]

@@ -2,7 +2,7 @@ const express = require("express");
 
 // Import users controllers
 
-// creating jobsRouter
+// creating usersRouter
 const usersRouter = express.Router();
 
 // create employee
