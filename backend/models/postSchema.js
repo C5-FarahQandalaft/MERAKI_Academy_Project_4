@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
+  companyId: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
   company: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
