@@ -6,10 +6,10 @@ const { createEmployee, createCompany } = require("../controllers/register");
 const usersRouter = express.Router();
 
 // create employee
-usersRouter.post("/createEmployee", createEmployee);
+usersRouter.post("/create/employee", createEmployee);
 
 // create company
-usersRouter.post("/createCompany", createCompany);
+usersRouter.post("/create/company", createCompany);
 
 // get all applied jobs
 usersRouter.get("/appliedjob");

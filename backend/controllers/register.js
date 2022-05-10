@@ -41,7 +41,6 @@ const createEmployee = (req, res) => {
 };
 
 //1-This function creates a new Company (new user)
-
 const createCompany = (req, res) => {
   const { name, field, country, email, password } = req.body;
   const company = new Company({
