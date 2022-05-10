@@ -1,7 +1,7 @@
 const express = require("express");
 
 // Import jobs controllers
-const { createPost } = require("../controllers/jobs");
+const { createPost, getAllJobs } = require("../controllers/jobs");
 
 // Middleware
 const authentication = require("../middleware/authentication");
@@ -11,7 +11,7 @@ const authorization = require("../middleware/authorization");
 const jobsRouter = express.Router();
 
 //get all posts
-jobsRouter.get("/");
+jobsRouter.get("/", getAllJobs);
 
 // create post
 jobsRouter.post(
