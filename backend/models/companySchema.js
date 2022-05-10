@@ -1,14 +1,23 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const companySchema = new Schema({
+//import bcrypt
+const bcrypt = require("bcrypt");
+
+const companySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   field: { type: String },
   country: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  postedJobs: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+  postedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
-const Company = model("Company", companySchema);
+//hashing password and lowercase email
+companySchema.pre("save", async function () {
+  this.email = this.email.toLowerCase();
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
-export default Company;
+const Company = mongoose.model("Company", companySchema);
+
+module.exports = Company;

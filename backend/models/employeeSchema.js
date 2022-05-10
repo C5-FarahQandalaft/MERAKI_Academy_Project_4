@@ -1,6 +1,9 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const employeeSchema = new Schema({
+//import bcrypt
+const bcrypt = require("bcrypt");
+
+const employeeSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   age: { type: Number },
@@ -8,9 +11,14 @@ const employeeSchema = new Schema({
   degree: { type: String },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  appliedJobs: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+  appliedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
-const Employee = model("Employee", employeeSchema);
+employeeSchema.pre("save", async function () {
+  this.email = this.email.toLowerCase();
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
-export default Employee;
+const Employee = mongoose.model("Employee", employeeSchema);
+
+module.exports = Employee;

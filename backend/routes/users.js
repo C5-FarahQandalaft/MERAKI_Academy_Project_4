@@ -1,15 +1,15 @@
 const express = require("express");
 
 // Import users controllers
-
+const { createEmployee, createCompany } = require("../controllers/register");
 // creating usersRouter
 const usersRouter = express.Router();
 
 // create employee
-usersRouter.post("/createEmployee");
+usersRouter.post("/createEmployee", createEmployee);
 
 // create company
-usersRouter.post("/createCompany");
+usersRouter.post("/createCompany", createCompany);
 
 // get all applied jobs
 usersRouter.get("/appliedjob");

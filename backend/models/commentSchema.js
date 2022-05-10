@@ -1,11 +1,11 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const commentSchema = new Schema({
+const commentSchema = new mongoose.Schema({
   comment: { type: String, required: true },
   commenterEmployee: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
   commenterCompany: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
 });
 
-const Comment = model("Comment", commentSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-export default Comment;
+module.exports = Comment;
