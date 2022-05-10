@@ -1,10 +1,11 @@
 const Post = require("../models/postSchema");
+const { post } = require("../routes/jobs");
 
 // This function creates new post
 const createPost = (req, res) => {
   const { title, description, salary, country, remote, available } = req.body;
   const newPost = new Post({
-    company: req.token.userId,
+    company: req.token.company,
     title,
     description,
     salary,
@@ -34,8 +35,7 @@ const createPost = (req, res) => {
 // This function returns all jobs
 const getAllJobs = (req, res) => {
   Post.find({})
-    .populate("company", "name -_id")
-    // .populate("comments")
+    .populate("comments")
     .then((jobs) => {
       if (jobs.length) {
         res.status(200).json({
@@ -111,9 +111,40 @@ const deletePostById = (req, res) => {
     });
 };
 
+//This function returns posts by company
+const findPostsByCompany = (req, res) => {
+  let name = req.params.name;
+
+  Post.find({})
+    .then((post) => {
+      const filtered = post.filter((element) => {
+        return element.company.toLowerCase().includes(name.toLowerCase());
+      });
+      if (!filtered.length) {
+        return res.status(404).json({
+          success: false,
+          message: `No posts found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `All the posts from companies name included ${name}`,
+        post: filtered,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   createPost,
   getAllJobs,
   updatePostById,
   deletePostById,
+  findPostsByCompany,
 };
