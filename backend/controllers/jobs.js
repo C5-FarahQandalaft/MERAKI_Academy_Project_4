@@ -1,5 +1,4 @@
 const Post = require("../models/postSchema");
-const { post } = require("../routes/jobs");
 
 // This function creates new post
 const createPost = (req, res) => {
@@ -141,10 +140,38 @@ const findPostsByCompany = (req, res) => {
     });
 };
 
+//This function returns posts by title
+const findPostsByTitle = (req, res) => {
+  let title = req.params.title;
+
+  Post.find({ title })
+    .then((post) => {
+      if (!post.length) {
+        return res.status(404).json({
+          success: false,
+          message: `The posts not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `All posts with title ${title}`,
+        post: post,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   createPost,
   getAllJobs,
   updatePostById,
   deletePostById,
   findPostsByCompany,
+  findPostsByTitle,
 };

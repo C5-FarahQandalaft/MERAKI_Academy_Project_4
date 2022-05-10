@@ -12,7 +12,7 @@ const companySchema = new mongoose.Schema({
   postedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
 });
 
-//hashing password and lowercase email and name
+//hashing password and lowercase email
 companySchema.pre("save", async function () {
   this.email = this.email.toLowerCase();
   this.password = await bcrypt.hash(this.password, 10);

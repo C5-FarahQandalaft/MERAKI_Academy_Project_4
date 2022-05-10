@@ -7,6 +7,7 @@ const {
   updatePostById,
   deletePostById,
   findPostsByCompany,
+  findPostsByTitle,
 } = require("../controllers/jobs");
 
 // Middleware
@@ -47,6 +48,6 @@ jobsRouter.delete(
 jobsRouter.get("/search_1/:name", findPostsByCompany);
 
 // get posts by post title
-jobsRouter.get("/search_2/:title");
+jobsRouter.get("/search_2/:title", findPostsByTitle);
 
 module.exports = jobsRouter;
