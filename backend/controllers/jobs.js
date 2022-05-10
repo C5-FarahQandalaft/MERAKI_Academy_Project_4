@@ -4,6 +4,7 @@ const Post = require("../models/postSchema");
 const createPost = (req, res) => {
   const { title, description, salary, country, remote, available } = req.body;
   const newPost = new Post({
+    companyId: req.token.userId,
     company: req.token.company,
     title,
     description,
@@ -34,7 +35,7 @@ const createPost = (req, res) => {
 // This function returns all jobs
 const getAllJobs = (req, res) => {
   Post.find({})
-    .populate("comments")
+    // .populate("comments")
     .then((jobs) => {
       if (jobs.length) {
         res.status(200).json({

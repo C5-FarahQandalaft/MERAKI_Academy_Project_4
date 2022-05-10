@@ -48,6 +48,34 @@ const applyToJob = (req, res) => {
     });
 };
 
+//this function show all applied job
+const getAllAppliedJobs = (req, res) => {
+  Employee.findById(req.token.userId)
+    .populate("appliedJobs")
+    .then((jobs) => {
+      console.log(jobs.appliedJobs);
+      if (jobs.appliedJobs.length) {
+        res.status(200).json({
+          success: true,
+          message: `All the jobs`,
+          jobs: jobs.appliedJobs,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: `No applied jobs found`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
 module.exports = {
   applyToJob,
+  getAllAppliedJobs,
 };
