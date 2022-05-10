@@ -1,7 +1,11 @@
 const express = require("express");
 
 // Import jobs controllers
-const { createPost, getAllJobs } = require("../controllers/jobs");
+const {
+  createPost,
+  getAllJobs,
+  updatePostById,
+} = require("../controllers/jobs");
 
 // Middleware
 const authentication = require("../middleware/authentication");
@@ -22,7 +26,12 @@ jobsRouter.post(
 );
 
 // update post by id
-jobsRouter.put("/update/post/:id");
+jobsRouter.put(
+  "/update/post/:id",
+  authentication,
+  authorization("company"),
+  updatePostById
+);
 
 // delete post by id
 jobsRouter.delete("/delete/post/:id ");

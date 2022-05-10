@@ -60,7 +60,33 @@ const getAllJobs = (req, res) => {
     });
 };
 
+// This function updates post by its id
+const updatePostById = (req, res) => {
+  const _id = req.params.id;
+  Post.findByIdAndUpdate(_id, req.body, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The Post is not found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: `Post updated`,
+        post: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
 module.exports = {
   createPost,
   getAllJobs,
+  updatePostById,
 };
