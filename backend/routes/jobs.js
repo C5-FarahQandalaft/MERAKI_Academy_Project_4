@@ -5,6 +5,7 @@ const {
   createPost,
   getAllJobs,
   updatePostById,
+  deletePostById,
 } = require("../controllers/jobs");
 
 // Middleware
@@ -34,7 +35,12 @@ jobsRouter.put(
 );
 
 // delete post by id
-jobsRouter.delete("/delete/post/:id ");
+jobsRouter.delete(
+  "/delete/post/:id",
+  authentication,
+  authorization("company"),
+  deletePostById
+);
 
 // get posts by company name
 jobsRouter.get("/search_1/:name");

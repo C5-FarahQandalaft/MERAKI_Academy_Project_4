@@ -85,8 +85,35 @@ const updatePostById = (req, res) => {
       });
     });
 };
+
+// This function deletes post by its id
+const deletePostById = (req, res) => {
+  const id = req.params.id;
+  Post.findByIdAndDelete(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The post is not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `Post deleted`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   createPost,
   getAllJobs,
   updatePostById,
+  deletePostById,
 };
