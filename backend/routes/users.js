@@ -2,6 +2,12 @@ const express = require("express");
 
 // Import users controllers
 const { createEmployee, createCompany } = require("../controllers/register");
+const { applyToJob } = require("../controllers/appliedjob");
+
+//import middleware
+const authentication = require("../middleware/authentication");
+const authorization = require("../middleware/authorization");
+
 // creating usersRouter
 const usersRouter = express.Router();
 
@@ -15,7 +21,12 @@ usersRouter.post("/create/company", createCompany);
 usersRouter.get("/appliedjob");
 
 // add post by id to the applied job section
-usersRouter.post("/appliedjob/:id");
+usersRouter.post(
+  "/appliedjob/:id",
+  authentication,
+  authorization("employee"),
+  applyToJob
+);
 
 // get company posts
 usersRouter.get("/postedjobs");
