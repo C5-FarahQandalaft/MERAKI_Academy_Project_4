@@ -5,8 +5,7 @@ const Company = require("../models/companySchema");
 const createPost = (req, res) => {
   const { title, description, salary, country, remote, available } = req.body;
   const newPost = new Post({
-    companyId: req.token.userId,
-    company: req.token.company,
+    company: req.token.userId,
     title,
     description,
     salary,
@@ -50,14 +49,35 @@ const createPost = (req, res) => {
 // This function returns all jobs
 const getAllJobs = (req, res) => {
   Post.find({})
-    // .populate("comments")
+    .populate([
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterCompany",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterEmployee",
+          model: "Employee",
+          select: "firstName lastName -_id",
+        },
+      },
+    ])
+    .populate("company", "name -_id")
     .then((jobs) => {
       if (jobs.length) {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
           jobs: jobs,
-          comments: jobs.comments,
         });
       } else {
         res.status(200).json({
@@ -131,9 +151,32 @@ const findPostsByCompany = (req, res) => {
   let name = req.params.name;
 
   Post.find({})
+    .populate([
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterCompany",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterEmployee",
+          model: "Employee",
+          select: "firstName lastName -_id",
+        },
+      },
+    ])
+    .populate("company", "name -_id")
     .then((post) => {
       const filtered = post.filter((element) => {
-        return element.company.toLowerCase().includes(name.toLowerCase());
+        return element.company.name.toLowerCase().includes(name.toLowerCase());
       });
       if (!filtered.length) {
         return res.status(404).json({
@@ -161,6 +204,29 @@ const findPostsByTitle = (req, res) => {
   let title = req.params.title;
 
   Post.find({ title })
+    .populate([
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterCompany",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterEmployee",
+          model: "Employee",
+          select: "firstName lastName -_id",
+        },
+      },
+    ])
+    .populate("company", "name -_id")
     .then((post) => {
       if (!post.length) {
         return res.status(404).json({

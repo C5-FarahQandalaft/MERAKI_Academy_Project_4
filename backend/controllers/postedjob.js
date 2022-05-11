@@ -3,7 +3,45 @@ const Company = require("../models/companySchema");
 //this function show all posts for company
 const getCompanyPosts = (req, res) => {
   Company.findById(req.token.userId)
-    .populate("postedJobs")
+    .populate([
+      {
+        path: "postedJobs",
+        model: "Post",
+        populate: {
+          path: "comments",
+          model: "Comment",
+          select: "-_id",
+          populate: {
+            path: "commenterCompany",
+            model: "Company",
+            select: "name -_id",
+          },
+        },
+      },
+      {
+        path: "postedJobs",
+        model: "Post",
+        populate: {
+          path: "comments",
+          model: "Comment",
+          select: "-_id",
+          populate: {
+            path: "commenterEmployee",
+            model: "Employee",
+            select: "firstName lastName -_id",
+          },
+        },
+      },
+      {
+        path: "postedJobs",
+        model: "Post",
+        populate: {
+          path: "company",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+    ])
     .then((post) => {
       if (post.postedJobs.length) {
         res.status(200).json({

@@ -65,7 +65,45 @@ const applyToJob = (req, res) => {
 //this function show all applied job
 const getAllAppliedJobs = (req, res) => {
   Employee.findById(req.token.userId)
-    .populate("appliedJobs")
+    .populate([
+      {
+        path: "appliedJobs",
+        model: "Post",
+        populate: {
+          path: "comments",
+          model: "Comment",
+          select: "-_id",
+          populate: {
+            path: "commenterCompany",
+            model: "Company",
+            select: "name -_id",
+          },
+        },
+      },
+      {
+        path: "appliedJobs",
+        model: "Post",
+        populate: {
+          path: "comments",
+          model: "Comment",
+          select: "-_id",
+          populate: {
+            path: "commenterEmployee",
+            model: "Employee",
+            select: "firstName lastName -_id",
+          },
+        },
+      },
+      {
+        path: "appliedJobs",
+        model: "Post",
+        populate: {
+          path: "company",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+    ])
     .then((jobs) => {
       if (jobs.appliedJobs.length) {
         res.status(200).json({
