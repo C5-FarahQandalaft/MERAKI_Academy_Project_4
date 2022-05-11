@@ -86,13 +86,38 @@ const updateComment = (req, res) => {
       if (!result) {
         return res.status(404).json({
           success: false,
-          message: `The comment is not found`,
+          message: `Comment is not found`,
         });
       }
       res.status(202).json({
         success: true,
-        message: `comment updated`,
+        message: `Comment updated`,
         comment: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+// This function deletes comment by its id
+const deleteComment = (req, res) => {
+  const id = req.params.id;
+  Comment.findByIdAndDelete(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `Comment is not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `Comment deleted`,
       });
     })
     .catch((err) => {
@@ -107,4 +132,5 @@ const updateComment = (req, res) => {
 module.exports = {
   createComment,
   updateComment,
+  deleteComment,
 };
