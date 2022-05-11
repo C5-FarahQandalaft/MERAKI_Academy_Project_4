@@ -78,6 +78,33 @@ const createComment = (req, res) => {
   }
 };
 
+// This function updates comment by its id
+const updateComment = (req, res) => {
+  const _id = req.params.id;
+  Comment.findByIdAndUpdate(_id, req.body, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `The comment is not found`,
+        });
+      }
+      res.status(202).json({
+        success: true,
+        message: `comment updated`,
+        comment: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   createComment,
+  updateComment,
 };

@@ -4,7 +4,7 @@ const express = require("express");
 const authentication = require("../middleware/authentication");
 
 // Import comment controllers
-const { createComment } = require("../controllers/comment");
+const { createComment, updateComment } = require("../controllers/comment");
 
 // creating commentRouter
 const commentRouter = express.Router();
@@ -16,6 +16,6 @@ commentRouter.post("/create/:post_id", authentication, createComment);
 commentRouter.delete("/:id");
 
 //update comment by id
-commentRouter.put("/update/:id");
+commentRouter.put("/update/:id", authentication, updateComment);
 
 module.exports = commentRouter;
