@@ -46,7 +46,7 @@ const getCompanyPosts = (req, res) => {
       if (post.postedJobs.length) {
         res.status(200).json({
           success: true,
-          message: `All the jobs`,
+          message: `All the jobs you posted`,
           post: post.postedJobs,
         });
       } else {
