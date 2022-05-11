@@ -217,7 +217,7 @@ const findPostsByCompany = (req, res) => {
 const findPostsByTitle = (req, res) => {
   let title = req.params.title;
 
-  Post.find({ title })
+  Post.find({})
     .populate([
       {
         path: "comments",
@@ -242,7 +242,10 @@ const findPostsByTitle = (req, res) => {
     ])
     .populate("company", "name -_id")
     .then((post) => {
-      if (!post.length) {
+      const filtered = post.filter((element) => {
+        return element.title.toLowerCase().includes(title.toLowerCase());
+      });
+      if (!filtered.length) {
         return res.status(404).json({
           success: false,
           message: `The posts not found`,
@@ -251,7 +254,7 @@ const findPostsByTitle = (req, res) => {
       res.status(200).json({
         success: true,
         message: `All posts with title ${title}`,
-        post: post,
+        post: filtered,
       });
     })
     .catch((err) => {
