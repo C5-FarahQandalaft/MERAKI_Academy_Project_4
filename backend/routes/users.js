@@ -3,6 +3,7 @@ const express = require("express");
 // Import users controllers
 const { createEmployee, createCompany } = require("../controllers/register");
 const { applyToJob, getAllAppliedJobs } = require("../controllers/appliedjob");
+const getCompanyPosts = require("../controllers/postedjob");
 
 //import middleware
 const authentication = require("../middleware/authentication");
@@ -34,6 +35,11 @@ usersRouter.post(
 );
 
 // get company posts
-usersRouter.get("/postedjobs");
+usersRouter.get(
+  "/postedjobs",
+  authentication,
+  authorization("company"),
+  getCompanyPosts
+);
 
 module.exports = usersRouter;
