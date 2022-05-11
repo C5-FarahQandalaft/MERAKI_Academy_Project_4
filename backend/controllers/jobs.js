@@ -132,10 +132,24 @@ const deletePostById = (req, res) => {
           message: `The post is not found`,
         });
       }
-      res.status(200).json({
-        success: true,
-        message: `Post deleted`,
-      });
+      Company.findOneAndUpdate(
+        { _id: req.token.userId },
+        { $pull: { postedJobs: id } },
+        { new: true }
+      )
+        .then(() => {
+          res.status(200).json({
+            success: true,
+            message: `Post deleted`,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            message: `Server Error`,
+            err: err.message,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).json({

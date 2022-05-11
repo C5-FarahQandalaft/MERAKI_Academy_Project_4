@@ -127,7 +127,61 @@ const getAllAppliedJobs = (req, res) => {
     });
 };
 
+// This function allow employee to withdraw application for job
+const withdrawJob = (req, res) => {
+  const postId = req.params.id;
+  Post.findById(postId)
+    .then((result) => {
+      if (!result.applicants.includes(req.token.userId)) {
+        return res.status(404).json({
+          success: false,
+          message: `Application not found`,
+        });
+      }
+      Employee.findOneAndUpdate(
+        { _id: req.token.userId },
+        { $pull: { appliedJobs: postId } },
+        { new: true }
+      )
+        .then(() => {
+          Post.findOneAndUpdate(
+            { _id: postId },
+            { $pull: { applicants: req.token.userId } },
+            { new: true }
+          )
+            .then(() => {
+              res.status(200).json({
+                success: true,
+                message: `Application deleted`,
+              });
+            })
+            .catch((err) => {
+              res.status(500).json({
+                success: false,
+                message: `Server Error`,
+                err: err.message,
+              });
+            });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            message: `Server Error`,
+            err: err.message,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   applyToJob,
   getAllAppliedJobs,
+  withdrawJob,
 };

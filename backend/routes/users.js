@@ -2,7 +2,11 @@ const express = require("express");
 
 // Import users controllers
 const { createEmployee, createCompany } = require("../controllers/register");
-const { applyToJob, getAllAppliedJobs } = require("../controllers/appliedjob");
+const {
+  applyToJob,
+  getAllAppliedJobs,
+  withdrawJob,
+} = require("../controllers/appliedjob");
 const getCompanyPosts = require("../controllers/postedjob");
 
 //import middleware
@@ -41,5 +45,8 @@ usersRouter.get(
   authorization("company"),
   getCompanyPosts
 );
+
+// withdraw application
+usersRouter.delete("/appliedjob/delete/:id", authentication, withdrawJob);
 
 module.exports = usersRouter;
