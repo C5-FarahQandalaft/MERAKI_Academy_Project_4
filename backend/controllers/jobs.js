@@ -1,4 +1,5 @@
 const Post = require("../models/postSchema");
+const Company = require("../models/companySchema");
 
 // This function creates new post
 const createPost = (req, res) => {
@@ -17,11 +18,25 @@ const createPost = (req, res) => {
   newPost
     .save()
     .then((post) => {
-      res.status(201).json({
-        success: true,
-        message: `Post created`,
-        post: post,
-      });
+      Company.findOneAndUpdate(
+        { _id: req.token.userId },
+        { $push: { postedJobs: post } },
+        { new: true }
+      )
+        .then(() => {
+          res.status(201).json({
+            success: true,
+            message: `Post created`,
+            post: post,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            success: false,
+            message: `Server Error`,
+            err: err.message,
+          });
+        });
     })
     .catch((err) => {
       res.status(500).json({

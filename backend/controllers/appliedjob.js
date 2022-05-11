@@ -13,16 +13,30 @@ const applyToJob = (req, res) => {
         });
       } else {
         if (post.available) {
-          Employee.findById(req.token.userId)
-            .then((employee) => {
-              post.applicants.push(req.token.userId);
-              post.save();
-              employee.appliedJobs.push(post);
-              employee.save();
-              res.status(200).json({
-                success: true,
-                message: `Successfully applied for this job`,
-              });
+          Employee.findOneAndUpdate(
+            { _id: req.token.userId },
+            { $push: { appliedJobs: post } },
+            { new: true }
+          )
+            .then(() => {
+              Post.findOneAndUpdate(
+                { _id: postId },
+                { $push: { applicants: req.token.userId } },
+                { new: true }
+              )
+                .then(() => {
+                  res.status(200).json({
+                    success: true,
+                    message: `Successfully applied for this job`,
+                  });
+                })
+                .catch((err) => {
+                  res.status(500).json({
+                    success: false,
+                    message: `Server Error`,
+                    err: err.message,
+                  });
+                });
             })
             .catch((err) => {
               res.status(500).json({
@@ -53,7 +67,6 @@ const getAllAppliedJobs = (req, res) => {
   Employee.findById(req.token.userId)
     .populate("appliedJobs")
     .then((jobs) => {
-      console.log(jobs.appliedJobs);
       if (jobs.appliedJobs.length) {
         res.status(200).json({
           success: true,
@@ -75,6 +88,7 @@ const getAllAppliedJobs = (req, res) => {
       });
     });
 };
+
 module.exports = {
   applyToJob,
   getAllAppliedJobs,
