@@ -1,0 +1,6 @@
+.registerBar {
+  display: flex;
+  gap: 10px;
+  margin-right: 50px;
+  margin-bottom: 5px;
+}
