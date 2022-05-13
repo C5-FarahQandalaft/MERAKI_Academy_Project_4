@@ -13,6 +13,7 @@ import { RegisterEmployee } from "./components/Register/Employee/index";
 import { LoginCompany } from "./components/Login/Company/index";
 import { LoginEmployee } from "./components/Login/Employee/index";
 import Login from "./components/Login";
+import AllJobs from "./components/Jobs";
 
 //get the token
 export const tokenContext = createContext("");
@@ -39,9 +40,9 @@ function App() {
     <div className="App">
       <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <tokenContext.Provider value={{ token, setToken }}>
-          <Navbar token={token}/>
+          <Navbar token={token} />
           <Routes>
-            <Route path="/jobs" element={<></>} />
+            <Route path="/jobs" element={<AllJobs />} />
             <Route path="/" element={<></>} />
             <Route path="/login" element={<Login />} />
             <Route path="/login/employee" element={<LoginEmployee />} />

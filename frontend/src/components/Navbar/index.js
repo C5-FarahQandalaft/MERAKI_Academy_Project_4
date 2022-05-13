@@ -12,6 +12,7 @@ import CompanyIn from "./Userbar/Company";
 export const Navbar = ({ token }) => {
   //check if user in
   const { isLoggedIn, setIsLoggedIn } = useContext(isLoggedInContext);
+
   //type of user
   let typeOfUser;
   isLoggedIn

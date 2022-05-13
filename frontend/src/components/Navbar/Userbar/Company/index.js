@@ -5,8 +5,8 @@ import { tokenContext, isLoggedInContext } from "../../../../App";
 
 const CompanyIn = () => {
   //check if user in
-  const { isLoggedIn, setIsLoggedIn } = useContext(isLoggedInContext);
-  const { token, setToken } = useContext(tokenContext);
+  const { setIsLoggedIn } = useContext(isLoggedInContext);
+  const { setToken } = useContext(tokenContext);
 
   //Callback-function to logout
   const logout = () => {
@@ -16,7 +16,10 @@ const CompanyIn = () => {
   };
 
   return (
-    <div>
+    <div className="registerBar">
+      <Link className="link" to="/jobs">
+        Home
+      </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout
       </Link>

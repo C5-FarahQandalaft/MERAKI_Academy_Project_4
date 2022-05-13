@@ -16,7 +16,10 @@ const EmployeeIn = () => {
   };
 
   return (
-    <div>
+    <div className="registerBar">
+      <Link className="link" to="/jobs">
+        Home
+      </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout
       </Link>
