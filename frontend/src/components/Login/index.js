@@ -1,7 +1,18 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import "./style.css";
 
-export const Login = () => {
+const Login = () => {
   return (
-    <div>Login</div>
-  )
-}
+    <div className="registerBar">
+      <Link className="link" to="/login/employee">
+        Login as Employee
+      </Link>
+      <Link className="link" to="/login/company">
+        Login as Company
+      </Link>
+    </div>
+  );
+};
+
+export default Login;

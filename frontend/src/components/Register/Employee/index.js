@@ -20,9 +20,6 @@ export const RegisterEmployee = () => {
   //Error color
   const [error, setError] = useState("");
 
-  //to close the popup
-  const [closing, setClosing] = useState(false);
-
   //navigate
   const navigate = useNavigate();
 
@@ -31,65 +28,79 @@ export const RegisterEmployee = () => {
   let testLenght = /^.{6,16}$/;
   //callback-function to create
   const create = () => {
-    if (email.includes(".com")) {
-      if (testLenght.test(password)) {
-        if (testNumber.test(password)) {
-          if (password === repeatPassword) {
-            axios
-              .post("http://localhost:5000/users/create/employee", {
-                firstName,
-                lastName,
-                email,
-                password,
-                country,
-                age,
-                degree,
-              })
-              .then((result) => {
-                setRegistered(result.data.message);
-              })
-              .catch((error) => {
-                setRegistered(error.response.data.message);
-                error.response.data.message.includes("Server")
-                  ? setError("server")
-                  : setError("email");
-              });
+    if (firstName.trim()) {
+      if (email.includes(".com")) {
+        if (testLenght.test(password)) {
+          if (testNumber.test(password)) {
+            if (password === repeatPassword) {
+              axios
+                .post("http://localhost:5000/users/create/employee", {
+                  firstName,
+                  lastName,
+                  email,
+                  password,
+                  country,
+                  age,
+                  degree,
+                })
+                .then((result) => {
+                  setRegistered(result.data.message);
+                })
+                .catch((error) => {
+                  setRegistered(error.response.data.message);
+                  error.response.data.message.includes("Server")
+                    ? setError("server")
+                    : setError("email");
+                });
+            } else {
+              setRegistered("Password didn't match");
+              setError("repeat");
+            }
           } else {
-            setRegistered("Password didn't match");
-            setError("repeat");
+            setRegistered("Password must contain at least one Number.");
+            setError("password");
           }
         } else {
-          setRegistered("Password must contain at least one Number.");
+          setRegistered("Password must be 6-16 Characters Long.");
           setError("password");
         }
       } else {
-        setRegistered("Password must be 6-16 Characters Long.");
-        setError("password");
+        setRegistered(`Wrong email, it should contain @ and .com`);
+        setError("email");
       }
     } else {
-      setRegistered(`Wrong email, it should contain @ and .com`);
-      setError("email");
+      setRegistered(`Please fill all required fields*`);
+      setError("all");
     }
   };
 
   //call-back to close pop
   const close = () => {
-    setClosing(true);
     navigate("/");
   };
 
   return (
-    <div className={closing ? "close" : "regContainer"}>
+    <div className="regContainer">
       <div className="closing">
         <button className="closeBtn" onClick={close}>
           &times;
         </button>
       </div>
       <h3>let's create your account</h3>
-      <label>First name*</label>
+
+      {error === "server" ? (
+        <label>First name*</label>
+      ) : error.includes("all") ? (
+        <label>First name*</label>
+      ) : (
+        <label>First name</label>
+      )}
+
       <input
         type="text"
-        className={error === "server" ? "error" : ""}
+        className={
+          error === "server" ? "error" : error === "all" ? "error" : ""
+        }
         placeholder="First name"
         onChange={(e) => {
           setFirstName(e.target.value);
@@ -97,10 +108,19 @@ export const RegisterEmployee = () => {
           setError("");
         }}
       />
-      <label>Last Name*</label>
+
+      {error === "server" ? (
+        <label>Last Name*</label>
+      ) : error.includes("all") ? (
+        <label>Last Name*</label>
+      ) : (
+        <label>Last Name</label>
+      )}
       <input
         type="text"
-        className={error === "server" ? "error" : ""}
+        className={
+          error === "server" ? "error" : error === "all" ? "error" : ""
+        }
         placeholder="Last Name"
         onChange={(e) => {
           setLastName(e.target.value);
@@ -133,10 +153,16 @@ export const RegisterEmployee = () => {
           setCountry(e.target.value);
         }}
       />
-      <label>Email*</label>
+      {error === "all" ? (
+        <label>Email*</label>
+      ) : error.includes("email") ? (
+        <label>Email*</label>
+      ) : (
+        <label>Email</label>
+      )}
       <input
         type="email"
-        className={error === "email" ? "error" : ""}
+        className={error === "email" ? "error" : error === "all" ? "error" : ""}
         placeholder="Email"
         onChange={(e) => {
           setEmail(e.target.value);
@@ -144,10 +170,20 @@ export const RegisterEmployee = () => {
           setError("");
         }}
       />
-      <label>Password*</label>
+
+      {error === "all" ? (
+        <label>Password*</label>
+      ) : error.includes("password") ? (
+        <label>Password*</label>
+      ) : (
+        <label>Password</label>
+      )}
+
       <input
         type="password"
-        className={error === "password" ? "error" : ""}
+        className={
+          error === "password" ? "error" : error === "all" ? "error" : ""
+        }
         placeholder="Password"
         onChange={(e) => {
           setPassword(e.target.value);
@@ -155,10 +191,19 @@ export const RegisterEmployee = () => {
           setError("");
         }}
       />
-      <label>Repeat password*</label>
+
+      {error === "all" ? (
+        <label>Repeat password*</label>
+      ) : error.includes("repeat") ? (
+        <label>Repeat password*</label>
+      ) : (
+        <label>Repeat password</label>
+      )}
       <input
         type="password"
-        className={error === "repeat" ? "error" : ""}
+        className={
+          error === "repeat" ? "error" : error === "all" ? "error" : ""
+        }
         placeholder="Repeat password"
         onChange={(e) => {
           setRepeatPassword(e.target.value);
