@@ -39,7 +39,7 @@ function App() {
     <div className="App">
       <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <tokenContext.Provider value={{ token, setToken }}>
-          <Navbar />
+          <Navbar token={token}/>
           <Routes>
             <Route path="/jobs" element={<></>} />
             <Route path="/" element={<></>} />
