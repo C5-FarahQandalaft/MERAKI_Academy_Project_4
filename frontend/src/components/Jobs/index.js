@@ -39,13 +39,29 @@ const AllJobs = () => {
                 <h3>Job description : </h3>
                 <p>{element.description}</p>
               </div>
+
               <div className="info">
-                <h3>Salary : </h3> <p>{element.salary} JD</p>
+                <h3>Experience : </h3>
+                <p>{element.experience}</p>
               </div>
 
               <div className="info">
-                <h3>Country : </h3>
-                <p>{element.country}</p>
+                <h3>Salary : </h3> <p>{element.salary}</p>
+              </div>
+
+              <div className="info">
+                <h3>Job type : </h3>
+                <p>{element.type}</p>
+              </div>
+
+              <div className="info">
+                <h3>Location : </h3>
+                <p>{element.location}</p>
+              </div>
+
+              <div className="info">
+                <h3>Appliacants : </h3>
+                <p>{element.applicants.length}</p>
               </div>
 
               <div className="info">
@@ -56,10 +72,6 @@ const AllJobs = () => {
               <div className="info">
                 <h3>Available : </h3>
                 <p>{element.available ? "Yes" : "No"}</p>
-              </div>
-              <div className="info">
-                <h3>Appliacants : </h3>
-                <p>{element.applicants.length}</p>
               </div>
             </div>
           );

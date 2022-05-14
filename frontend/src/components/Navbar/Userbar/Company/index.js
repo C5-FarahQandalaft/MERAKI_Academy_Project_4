@@ -17,6 +17,9 @@ const CompanyIn = () => {
 
   return (
     <div className="registerBar">
+      <Link className="link" to="/create/post">
+        Create Post
+      </Link>
       <Link className="link" to="/jobs">
         Home
       </Link>

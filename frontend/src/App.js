@@ -14,6 +14,7 @@ import { LoginCompany } from "./components/Login/Company/index";
 import { LoginEmployee } from "./components/Login/Employee/index";
 import Login from "./components/Login";
 import AllJobs from "./components/Jobs";
+import CreatePost from "./components/Jobs/CreatePost";
 
 //get the token
 export const tokenContext = createContext("");
@@ -42,6 +43,7 @@ function App() {
         <tokenContext.Provider value={{ token, setToken }}>
           <Navbar token={token} />
           <Routes>
+            <Route path="/create/post" element={<CreatePost token={token}/>} />
             <Route path="/jobs" element={<AllJobs />} />
             <Route path="/" element={<></>} />
             <Route path="/login" element={<Login />} />

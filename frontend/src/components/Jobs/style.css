@@ -4,11 +4,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
   gap: 10px;
 }
 
 .mainContainer h2 {
+  margin-top: 15px;
+  margin-left: 2px;
   font-weight: 500;
   height: 30px;
   border-bottom: 2px solid green;
@@ -17,28 +18,123 @@
 
 .info {
   display: flex;
-  align-items: center;
-  gap: 5px;
+  flex-direction: column;
+  padding: 5px 0;
+  width: 400px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.257);
 }
 
 .info:last-child {
   border-style: none;
+  padding-bottom: 13px;
 }
 
 .info h3 {
-  font-size: 17px;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 2px;
+  font-weight: 500;
   cursor: default;
 }
 
 .info p {
+  margin-top: 10px;
   font-size: 15px;
+  margin-left: 2px;
+  line-height: 18px;
   cursor: default;
 }
 
 .post {
   border: 2px solid rgba(25, 25, 25, 0.846);
-  padding: 10px 5px;
+  padding: 0px 5px;
   border-radius: 5px;
   background-color: rgba(211, 211, 211, 0.216);
+}
+
+.postContainer {
+  width: 300px;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 7%;
+  border: 2px solid rgba(25, 25, 25, 0.846);
+  border-radius: 5px;
+}
+
+.postContainer select {
+  padding: 2px 3px;
+  margin: 0 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.postContainer textarea {
+  padding: 2px 3px;
+  margin: 0 10px;
+  height: 80px;
+  border-radius: 3px;
+  border: 1px solid;
+  resize: vertical;
+}
+
+.postContainer h3 {
+  padding: 15px 10px;
+  font-weight: 500;
+  border-bottom: 2px solid green;
+  margin: 2px 0px;
+  cursor: default;
+}
+
+.postContainer label {
+  font-size: 14px;
+  padding: 2px 10px;
+ margin: 5px 0;
+}
+
+.postContainer input {
+  padding: 2px 3px;
+  margin: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+.postContainer button {
+  background-color: green;
+  /* margin-top: 15px;
+  margin-left: 10px; */
+  border-style: none;
+  margin: 10px 10px;
+  width: 80px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.postContainer button:hover {
+  transform: scale(1.03);
+}
+
+.salary {
+  display: flex;
+}
+
+.salary input {
+  width: 100%;
+}
+
+.note {
+  padding: 2px 3px;
+  margin: 0 10px;
+}
+
+.note p {
+  font-size: 13px;
 }
