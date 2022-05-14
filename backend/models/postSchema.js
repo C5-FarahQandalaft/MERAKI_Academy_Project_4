@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
   location: { type: String, required: true },
   type: { type: String, required: true },
   remote: { type: Boolean, default: false },
-  available: { type: Boolean, required: true, default: true },
+  available: { type: Boolean, default: true },
   applicants: [
     {
       type: mongoose.Schema.Types.ObjectId,
