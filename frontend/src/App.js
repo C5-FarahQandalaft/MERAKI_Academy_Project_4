@@ -15,10 +15,12 @@ import { LoginEmployee } from "./components/Login/Employee/index";
 import Login from "./components/Login";
 import AllJobs from "./components/Jobs";
 import CreatePost from "./components/Jobs/CreatePost";
+import UpdatePost from "./components/Jobs/UpdatePost";
 
 //get the token
 export const tokenContext = createContext("");
 export const isLoggedInContext = createContext(false);
+export const postIdContext = createContext("");
 
 function App() {
   //check if user logged in
@@ -37,23 +39,41 @@ function App() {
     tokenInLocal === "null" ? false : true
   );
 
+  //check if there is there is already postId
+  const postInLocal = localStorage.getItem("post");
+
+  //to share postId
+  const [postId, setPostId] = useState(postInLocal ? postInLocal : "");
+
+  //save postId in local
+  localStorage.setItem("post", postId);
+
   return (
     <div className="App">
-      <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-        <tokenContext.Provider value={{ token, setToken }}>
-          <Navbar token={token} />
-          <Routes>
-            <Route path="/create/post" element={<CreatePost token={token}/>} />
-            <Route path="/jobs" element={<AllJobs />} />
-            <Route path="/" element={<></>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/login/employee" element={<LoginEmployee />} />
-            <Route path="/login/company" element={<LoginCompany />} />
-            <Route path="/register/company" element={<RegisterCompany />} />
-            <Route path="/register/employee" element={<RegisterEmployee />} />
-          </Routes>
-        </tokenContext.Provider>
-      </isLoggedInContext.Provider>
+      <postIdContext.Provider value={{ postId, setPostId }}>
+        <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+          <tokenContext.Provider value={{ token, setToken }}>
+            <Navbar token={token} />
+            <Routes>
+              <Route
+                path="/update/post"
+                element={<UpdatePost token={token} postId={postId} />}
+              />
+              <Route
+                path="/create/post"
+                element={<CreatePost token={token} />}
+              />
+              <Route path="/jobs" element={<AllJobs token={token} />} />
+              <Route path="/" element={<></>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/login/employee" element={<LoginEmployee />} />
+              <Route path="/login/company" element={<LoginCompany />} />
+              <Route path="/register/company" element={<RegisterCompany />} />
+              <Route path="/register/employee" element={<RegisterEmployee />} />
+            </Routes>
+          </tokenContext.Provider>
+        </isLoggedInContext.Provider>
+      </postIdContext.Provider>
     </div>
   );
 }

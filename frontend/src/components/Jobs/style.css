@@ -12,7 +12,6 @@
   margin-left: 2px;
   font-weight: 500;
   height: 30px;
-  border-bottom: 2px solid green;
   cursor: default;
 }
 
@@ -91,7 +90,7 @@
 .postContainer label {
   font-size: 14px;
   padding: 2px 10px;
- margin: 5px 0;
+  margin: 5px 0;
 }
 
 .postContainer input {
@@ -108,8 +107,6 @@ input::-webkit-inner-spin-button {
 
 .postContainer button {
   background-color: green;
-  /* margin-top: 15px;
-  margin-left: 10px; */
   border-style: none;
   margin: 10px 10px;
   width: 80px;
@@ -137,4 +134,25 @@ input::-webkit-inner-spin-button {
 
 .note p {
   font-size: 13px;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid green;
+}
+
+.edit {
+  background-color: transparent;
+  margin-top: 8px;
+  height: 22px;
+  width: 22px;
+  border-style: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.edit:hover {
+  transform: scale(1.03);
 }
