@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   experience: { type: String, default: "Entry-level" },
-  salary: { type: String, default: 0 },
+  salary: { type: String, default: "0" },
   location: { type: String, required: true },
   type: { type: String, required: true },
   remote: { type: Boolean, default: false },

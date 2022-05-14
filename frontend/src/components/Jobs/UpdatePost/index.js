@@ -1,56 +1,56 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "../style.css";
 import { useNavigate } from "react-router-dom";
 
-const CreatePost = ({ token }) => {
+const UpdatePost = ({ token, postId }) => {
   //Post inputs
-  const salaryInputRef = useRef(0);
+  const [post, setPost] = useState({});
+
+  const salaryInputRef = useRef("0");
   const salaryCurrencyRef = useRef("Select");
-  const salary = useRef("");
+  const salary = useRef("0");
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [experience, setExperience] = useState("Entry-level");
-  const [location, setLocation] = useState("");
+  const [title, setTitle] = useState(post.title);
 
-  const [type, setType] = useState("");
-  const [remote, setRemote] = useState(false);
-  const [available, setAvailable] = useState(true);
+  const [description, setDescription] = useState(post.description);
 
-  //to show the result and error
+  const [experience, setExperience] = useState(post.experience);
+
+  const [location, setLocation] = useState(post.location);
+
+  const [type, setType] = useState(post.type);
+
+  const [remote, setRemote] = useState(post.remote);
+
+  const [available, setAvailable] = useState(post.available);
+
+  //to show the result and post
   const [result, setResult] = useState("");
 
   //navigate
   const navigate = useNavigate();
 
-  //handling errors
-  const checkPost = () => {
-    if (title.trim()) {
-      if (description.trim()) {
-        if (salaryCurrencyRef.current.value !== "Select") {
-          const valueOfSalary =
-            salaryInputRef.current.value +
-            " " +
-            salaryCurrencyRef.current.value;
-          salary.current = valueOfSalary;
-          addPost();
-        } else {
-          setResult("Select salary currency");
-        }
-      } else {
-        setResult("Please add job description");
-      }
+  //handle update
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    if (
+      salaryCurrencyRef.current.value !== "Select" &&
+      salaryInputRef.current.value !== ""
+    ) {
+      const valueOfSalary =
+        salaryInputRef.current.value + " " + salaryCurrencyRef.current.value;
+      salary.current = valueOfSalary;
+      update();
     } else {
-      setResult("Please fill all required fields*");
+      setResult("Select salary currency and your salary number");
     }
   };
 
-  //function to create the post
-  const addPost = () => {
-    axios
-      .post(
-        "http://localhost:5000/jobs/create/post",
+  const update = async () => {
+    await axios
+      .put(
+        `http://localhost:5000/jobs/update/post/${postId}`,
         {
           title,
           description,
@@ -67,22 +67,34 @@ const CreatePost = ({ token }) => {
           },
         }
       )
-      .then(() => {
+      .then((result) => {
+        localStorage.removeItem("post");
         navigate("/jobs");
       })
       .catch((error) => {
-        error.response.data.message
-          ? setResult("Please fill all required fields*")
-          : setResult("");
+        setResult(error.response.data.message);
       });
   };
 
+  useEffect(() => {
+    //we need to get the post we want to update
+    axios
+      .get(`http://localhost:5000/jobs/search_3/${postId}`)
+      .then((result) => {
+        const Post = result.data.post;
+        setPost(Post);
+      })
+      .catch((error) => {
+        setResult(error.response.data.message);
+      });
+  }, []);
+
   return (
-    <div className="postContainer">
-      <h3>Create your post</h3>
+    <form className="postContainer">
       {result ? <label>Job title*</label> : <label>Job title</label>}
 
       <input
+        defaultValue={post.title}
         type="text"
         onChange={(e) => {
           setTitle(e.target.value);
@@ -200,19 +212,14 @@ const CreatePost = ({ token }) => {
         <option>Yes</option>
         <option>No</option>
       </select>
-      <button onClick={checkPost}>Submit</button>
+      <button onClick={(e) => handleUpdate(e)}>Submit</button>
       <div className="note">
         <h5>Note :</h5>
-        <p>
-          - Experience default value : Entry-level
-          <br />
-          - Remote default value : No
-          <br />- Available default value : Yes
-        </p>
+        <p>- You should enter the salary value</p>
       </div>
       <p className={result ? "wrong" : ""}>{result}</p>
-    </div>
+    </form>
   );
 };
 
-export default CreatePost;
+export default UpdatePost;
