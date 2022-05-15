@@ -12,6 +12,12 @@ const AllJobs = ({ token }) => {
   const typeOfUser = jwt_decode(token).typeOfUser;
   const company = jwt_decode(token).company;
 
+  //category states
+  const [Remotly, setRemotly] = useState("Remote");
+  const [experienceCat, setExperienceCat] = useState("Experience");
+  const [typeCat, setTypeCat] = useState("Job type");
+  const [availableCat, setAvailableCat] = useState("Available");
+
   //navigate
   const navigate = useNavigate();
 
@@ -61,6 +67,48 @@ const AllJobs = ({ token }) => {
       });
   };
 
+  //clear search
+  const clearSearch = (e) => {
+    window.location.reload(false);
+  };
+
+  //filter by remote
+  const filterRemote = (e) => {
+    let remoteAnswer = e.target.value;
+    if (remoteAnswer !== "Remote") {
+      remoteAnswer === "Yes" ? setRemotly(true) : setRemotly(false);
+    } else {
+      setRemotly("Remote");
+    }
+  };
+
+  //filter by experience
+  const filterExperience = (e) => {
+    let experienceAnswer = e.target.value;
+    experienceAnswer !== "Experience"
+      ? setExperienceCat(experienceAnswer)
+      : setExperienceCat("Experience");
+  };
+
+  //filter by type
+  const filterType = (e) => {
+    e.target.value !== "Job type"
+      ? setTypeCat(e.target.value)
+      : setTypeCat("Job type");
+  };
+
+  //filter by Available
+  const filterAvailable = (e) => {
+    let availableAnswer = e.target.value;
+    if (availableAnswer !== "Available") {
+      availableAnswer === "Yes"
+        ? setAvailableCat(true)
+        : setAvailableCat(false);
+    } else {
+      setAvailableCat("Available");
+    }
+  };
+
   //useEffect to show all posts
   useEffect(() => {
     getAllJobs();
@@ -68,12 +116,72 @@ const AllJobs = ({ token }) => {
 
   return (
     <div className="Container">
-      <input placeholder="Search" onChange={seachByTitle} />
+      <div className="filter">
+        <button onClick={clearSearch}>Clear Search </button>
+        <input
+          placeholder="Search Job title or Company"
+          onChange={seachByTitle}
+        />
+
+        <select onChange={filterExperience}>
+          <option>Experience</option>
+          <option>Entry-level</option>
+          <option>Intermediate</option>
+          <option>Mid-level</option>
+          <option>Senior-level</option>
+        </select>
+
+        <select onChange={filterType}>
+          <option>Job type</option>
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Contract</option>
+          <option>internship</option>
+        </select>
+        <select onChange={filterRemote}>
+          <option>Remote</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+        <select onChange={filterAvailable}>
+          <option>Available</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
       <div className="mainContainer">
         {error ? (
           <p>{error}</p>
-        ) : posts ? (
+        ) : (
           posts
+            .filter((el) => {
+              if (Remotly === "Remote") {
+                return el;
+              } else {
+                return el.remote === Remotly;
+              }
+            })
+            .filter((el) => {
+              if (availableCat === "Available") {
+                return el;
+              } else {
+                return el.remote === availableCat;
+              }
+            })
+            .filter((el) => {
+              if (typeCat === "Job type") {
+                return el;
+              } else {
+                return el.type === typeCat;
+              }
+            })
+            .filter((el) => {
+              if (experienceCat === "Experience") {
+                return el;
+              } else {
+                return el.experience === experienceCat;
+              }
+            })
             .filter((el) => {
               return (
                 el.title.includes(searchTitle) ||
@@ -161,8 +269,6 @@ const AllJobs = ({ token }) => {
                 </div>
               );
             })
-        ) : (
-          "No jobs found"
         )}
       </div>
     </div>
