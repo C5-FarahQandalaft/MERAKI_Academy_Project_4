@@ -91,7 +91,7 @@ const UpdatePost = ({ token, postId }) => {
 
   return (
     <form className="postContainer">
-      {result ? <label>Job title*</label> : <label>Job title</label>}
+      <label>Job title</label>
 
       <input
         defaultValue={post.title}
@@ -102,13 +102,10 @@ const UpdatePost = ({ token, postId }) => {
         }}
       />
 
-      {result ? (
-        <label>Job description*</label>
-      ) : (
-        <label>Job description</label>
-      )}
+      <label>Job description</label>
 
       <textarea
+        defaultValue={post.description}
         onChange={(e) => {
           setDescription(e.target.value);
           setResult("");
@@ -157,7 +154,7 @@ const UpdatePost = ({ token, postId }) => {
         </select>
       </div>
 
-      {result ? <label>Job type*</label> : <label>Job type</label>}
+      <label>Job type</label>
 
       <select
         onChange={(e) => {
@@ -176,9 +173,10 @@ const UpdatePost = ({ token, postId }) => {
         <option>internship</option>
       </select>
 
-      {result ? <label>Location*</label> : <label>Location</label>}
+      <label>Location</label>
 
       <input
+        defaultValue={post.location}
         type="text"
         onChange={(e) => {
           setLocation(e.target.value);

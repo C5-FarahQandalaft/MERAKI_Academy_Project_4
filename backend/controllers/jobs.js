@@ -285,7 +285,7 @@ const findPostById = (req, res) => {
       {
         path: "comments",
         model: "Comment",
-        select: "-_id",
+        select: "",
         populate: {
           path: "commenterCompany",
           model: "Company",
@@ -295,7 +295,7 @@ const findPostById = (req, res) => {
       {
         path: "comments",
         model: "Comment",
-        select: "-_id",
+        select: "",
         populate: {
           path: "commenterEmployee",
           model: "Employee",

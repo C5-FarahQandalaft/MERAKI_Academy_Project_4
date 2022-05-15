@@ -33,6 +33,12 @@ const AllJobs = ({ token }) => {
     }
   };
 
+  //to view post
+  const ViewPost = (e) => {
+    setPostId(e.target.id);
+    navigate("/jobs/post");
+  };
+
   //show all posts
   const getAllJobs = () => {
     axios
@@ -190,82 +196,73 @@ const AllJobs = ({ token }) => {
             })
             .map((element) => {
               return (
-                <div key={element._id} className="post">
-                  <div className="postHeader">
-                    <h2>{element.company.name}</h2>
+                <div key={element._id}>
+                  <div className="post">
+                    <div className="postHeader">
+                      <h2>{element.company.name}</h2>
 
-                    {typeOfUser === "company" ? (
-                      company === element.company.name ? (
-                        <div id={element._id} className="controlDiv">
-                          <FiEdit
-                            id={element._id}
-                            className="edit"
-                            onClick={(e) => {
-                              const id = e.target.id;
-                              showUpdateForm(id);
-                            }}
-                          />
+                      {typeOfUser === "company" ? (
+                        company === element.company.name ? (
+                          <div id={element._id} className="controlDiv">
+                            <FiEdit
+                              id={element._id}
+                              className="edit"
+                              onClick={(e) => {
+                                const id = e.target.id;
+                                showUpdateForm(id);
+                              }}
+                            />
 
-                          <FiTrash2
-                            id={element._id}
-                            className="delete"
-                            onClick={(e) => {
-                              const id = e.target.id;
-                              deletePost(id);
-                            }}
-                          />
-                        </div>
+                            <FiTrash2
+                              id={element._id}
+                              className="delete"
+                              onClick={(e) => {
+                                const id = e.target.id;
+                                deletePost(id);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )
                       ) : (
                         <></>
-                      )
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                      )}
+                    </div>
 
-                  <div className="info">
-                    <h3>Job title : </h3>
-                    <p>{element.title}</p>
-                  </div>
+                    <div className="info">
+                      <h3>Job title : </h3>
+                      <p>{element.title}</p>
+                    </div>
 
-                  <div className="info">
-                    <h3>Job description : </h3>
-                    <p>{element.description}</p>
-                  </div>
+                    <div className="info">
+                      <h3>Experience : </h3>
+                      <p>{element.experience}</p>
+                    </div>
 
-                  <div className="info">
-                    <h3>Experience : </h3>
-                    <p>{element.experience}</p>
-                  </div>
+                    <div className="info">
+                      <h3>Job type : </h3>
+                      <p>{element.type}</p>
+                    </div>
 
-                  <div className="info">
-                    <h3>Salary : </h3> <p>{element.salary}</p>
-                  </div>
+                    <div className="info">
+                      <h3>Appliacants : </h3>
+                      <p>{element.applicants.length}</p>
+                    </div>
 
-                  <div className="info">
-                    <h3>Job type : </h3>
-                    <p>{element.type}</p>
-                  </div>
+                    <div className="info">
+                      <h3>Remote : </h3>
+                      <p>{element.remote ? "Yes" : "No"}</p>
+                    </div>
 
-                  <div className="info">
-                    <h3>Location : </h3>
-                    <p>{element.location}</p>
+                    <div className="info">
+                      <h3>Available : </h3>
+                      <p>{element.available ? "Yes" : "No"}</p>
+                    </div>
                   </div>
-
-                  <div className="info">
-                    <h3>Appliacants : </h3>
-                    <p>{element.applicants.length}</p>
-                  </div>
-
-                  <div className="info">
-                    <h3>Remote : </h3>
-                    <p>{element.remote ? "Yes" : "No"}</p>
-                  </div>
-
-                  <div className="info">
-                    <h3>Available : </h3>
-                    <p>{element.available ? "Yes" : "No"}</p>
-                  </div>
+                  <button id={element._id} onClick={ViewPost}>
+                    View job
+                  </button>
                 </div>
               );
             })

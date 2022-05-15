@@ -1,0 +1,120 @@
+.singleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.singlePost {
+  width: 30vw;
+  border: 2px solid rgba(25, 25, 25, 0.846);
+  padding: 0px 0.7%;
+  border-radius: 5px;
+  background-color: rgba(211, 211, 211, 0.216);
+  margin-bottom: 40px;
+}
+
+.singleInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 2% 0;
+  width: 28vw;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.257);
+}
+
+.singleInfo:last-child {
+  border-style: none;
+  padding-bottom: 1%;
+}
+
+.singleInfo h3 {
+  font-size: 1.1em;
+  margin-top: 2%;
+  margin-left: 0.7%;
+  font-weight: 500;
+  cursor: default;
+}
+
+.singleInfo p {
+  margin-top: 2%;
+  font-size: 0.9em;
+  margin-left: 0.7%;
+  line-height: 1.2em;
+  cursor: default;
+}
+
+.commentDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  /* justify-content: flex-start; */
+}
+
+.commentDiv h3 {
+  position: absolute;
+  bottom: 100%;
+  left: 26%;
+}
+
+.commentSection {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1%;
+  position: relative;
+}
+
+.commentSection textarea {
+  width: 20vw;
+  height: 11vh;
+  padding: 2px 3px;
+  margin: 0 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  resize: none;
+}
+
+.commentSection button {
+  color: white;
+  position: absolute;
+  bottom: 12%;
+  left: 37.5%;
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  cursor: pointer;
+  border-style: none;
+  background-color: rgb(0, 0, 157);
+}
+
+.send-icon {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 30%;
+}
+
+.commentSection button:hover {
+  transform: scale(1.03);
+}
+
+.showComment {
+  margin: 1% 0;
+  width: 45%;
+  display: flex;
+}
+
+.showComment h4 {
+  margin-right: 1%;
+  margin-top: 0.5%;
+}
+
+.showComment p {
+  padding-left: 1%;
+  padding-top: 0.5%;
+  border: 1px solid green;
+  border-radius: 5px;
+  height: 10vh;
+  width: 20vw;
+}
