@@ -1,13 +1,13 @@
-import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import "./style.css";
+import axios from "axios";
+import "../style.css";
 import { FiEdit, FiTrash2, FiPlus, FiMinus } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { postIdContext } from "../../App";
+import { postIdContext } from "../../../App";
 
-const AllJobs = ({ token }) => {
+const PostedJobs = ({ token }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
   const typeOfUser = jwt_decode(token).typeOfUser;
@@ -25,9 +25,6 @@ const AllJobs = ({ token }) => {
 
   //search
   const [searchTitle, setSearchTitle] = useState("");
-
-  //apply to job
-  const [success, setSuccess] = useState("");
 
   //to update post
   const { setPostId } = useContext(postIdContext);
@@ -47,11 +44,15 @@ const AllJobs = ({ token }) => {
   };
 
   //show all posts
-  const getAllJobs = () => {
+  const allPostedJobs = () => {
     axios
-      .get("http://localhost:5000/jobs")
+      .get("http://localhost:5000/users/postedjobs", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((result) => {
-        const allPosts = result.data.jobs;
+        const allPosts = result.data.post;
         setPosts(allPosts);
       })
       .catch((error) => {
@@ -74,7 +75,7 @@ const AllJobs = ({ token }) => {
           },
         })
         .then(() => {
-          getAllJobs();
+          allPostedJobs();
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -124,68 +125,10 @@ const AllJobs = ({ token }) => {
     }
   };
 
-  //apply to job
-  const applyToJob = (e) => {
-    if (e.target.id) {
-      axios
-        .post(
-          `http://localhost:5000/users/appliedjob/${e.target.id}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((result) => {
-          setSuccess(result.data.message);
-          setTimeout(() => {
-            setSuccess("");
-          }, 800);
-          getAllJobs();
-        })
-        .catch((err) => {
-          setSuccess(err.response.data.message);
-          setTimeout(() => {
-            setSuccess("");
-          }, 800);
-        });
-    }
-  };
-
-  //withdraw job
-  const withdrawJob = (e) => {
-    if (e.target.id) {
-      axios
-        .delete(
-          `http://localhost:5000/users/appliedjob/delete/${e.target.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((result) => {
-          setSuccess(result.data.message);
-          setTimeout(() => {
-            setSuccess("");
-          }, 800);
-          getAllJobs();
-        })
-        .catch((err) => {
-          setSuccess(err.response.data.message);
-          setTimeout(() => {
-            setSuccess("");
-          }, 800);
-        });
-    }
-  };
-
   //useEffect to show all posts
   useEffect(() => {
-    getAllJobs();
+    allPostedJobs();
   }, []);
-
   return (
     <div className="Container">
       <div className="filter">
@@ -224,7 +167,7 @@ const AllJobs = ({ token }) => {
       <div className="mainContainer">
         {error ? (
           <p>{error}</p>
-        ) : (
+        ) : posts ? (
           posts
             .filter((el) => {
               if (Remotly === "Remote") {
@@ -326,52 +269,23 @@ const AllJobs = ({ token }) => {
                       <p>{element.available ? "Yes" : "No"}</p>
                     </div>
                   </div>
-                  <div className="bottomBtns">
-                    {typeOfUser === "employee" ? (
-                      element.applicants.includes(userId) ? (
-                        <button
-                          id={element._id}
-                          className="withdrawBtn"
-                          onClick={withdrawJob}
-                        >
-                          <FiMinus id={element._id} className="plus" />
-                          Withdraw job
-                        </button>
-                      ) : (
-                        <button
-                          id={element._id}
-                          className="applyBtn"
-                          onClick={applyToJob}
-                        >
-                          <FiPlus id={element._id} className="plus" /> Apply to
-                          job
-                        </button>
-                      )
-                    ) : (
-                      <></>
-                    )}
-
-                    <button
-                      className="view"
-                      id={element._id}
-                      onClick={ViewPost}
-                    >
-                      <AiOutlineEye className="viewIcon" id={element._id} />
-                      View job
-                    </button>
-                  </div>
+                  <button
+                    className="viewCompany"
+                    id={element._id}
+                    onClick={ViewPost}
+                  >
+                    <AiOutlineEye className="viewIcon" id={element._id} />
+                    View job
+                  </button>
                 </div>
               );
             })
+        ) : (
+          <p>No posts found.</p>
         )}
-      </div>
-      <div className={success ? "applyMsg" : "hide"}>
-        <div className="Msg">
-          <p>{success}</p>
-        </div>
       </div>
     </div>
   );
 };
 
-export default AllJobs;
+export default PostedJobs;

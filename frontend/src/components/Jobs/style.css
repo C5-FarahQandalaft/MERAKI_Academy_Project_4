@@ -257,6 +257,23 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
+.viewCompany{
+  display: flex;
+  margin: 1% 1%;
+  align-items: center;
+  justify-content: center;
+  gap: 1%;
+  border-radius: 5px;
+  border-style: none;
+  background-color: green;
+  color: white;
+  padding: 0 1%;
+  height: 5%;
+  width: 22%;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+
 .viewIcon {
   height: 60%;
   width: 22%;

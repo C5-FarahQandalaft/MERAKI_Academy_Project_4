@@ -17,11 +17,14 @@ const CompanyIn = () => {
 
   return (
     <div className="registerBar">
-      <Link className="link" to="/create/post">
-        Create Post
-      </Link>
       <Link className="link" to="/jobs">
         Home
+      </Link>
+      <Link className="link" to="/postedjobs">
+        Posted jobs
+      </Link>
+      <Link className="link" to="/create/post">
+        Create Post
       </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout
