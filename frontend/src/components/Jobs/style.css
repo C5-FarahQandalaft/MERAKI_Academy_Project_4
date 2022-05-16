@@ -188,3 +188,103 @@ input::-webkit-inner-spin-button {
 .filter {
   display: flex;
 }
+
+.bottomBtns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1% 1%;
+  height: 5%;
+}
+
+.applyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border-style: none;
+  background-color: blue;
+  color: white;
+  padding: 0 1%;
+  height: 100%;
+  width: 25%;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+.applyBtn:hover {
+  transform: scale(1.03);
+}
+
+.plus {
+  height: 60%;
+  width: 20%;
+  border-right: 1px solid white;
+  margin-right: 5%;
+}
+
+.withdrawBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border-style: none;
+  background-color: red;
+  color: white;
+  padding: 0 1%;
+  height: 100%;
+  width: 28%;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+
+.withdrawBtn:hover {
+  transform: scale(1.03);
+}
+
+.view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1%;
+  border-radius: 5px;
+  border-style: none;
+  background-color: orangered;
+  color: white;
+  padding: 0 1%;
+  height: 100%;
+  width: 22%;
+  font-size: 0.7em;
+  cursor: pointer;
+}
+
+.viewIcon {
+  height: 60%;
+  width: 22%;
+  border-right: 1px solid white;
+  margin-right: 5%;
+  padding-right: 5%;
+}
+
+.view:hover {
+  transform: scale(1.03);
+}
+
+.applyMsg {
+  position: fixed;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.257);
+  height: 20%;
+  border-radius: 5px;
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Msg {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

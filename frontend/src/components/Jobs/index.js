@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import "./style.css";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiPlus, FiMinus } from "react-icons/fi";
+import { AiOutlineEye } from "react-icons/ai";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { postIdContext } from "../../App";
@@ -11,6 +12,7 @@ const AllJobs = ({ token }) => {
   const [error, setError] = useState("");
   const typeOfUser = jwt_decode(token).typeOfUser;
   const company = jwt_decode(token).company;
+  const userId = jwt_decode(token).userId;
 
   //category states
   const [Remotly, setRemotly] = useState("Remote");
@@ -24,6 +26,9 @@ const AllJobs = ({ token }) => {
   //search
   const [searchTitle, setSearchTitle] = useState("");
 
+  //apply to job
+  const [success, setSuccess] = useState("");
+
   //to update post
   const { setPostId } = useContext(postIdContext);
   const showUpdateForm = (id) => {
@@ -35,8 +40,10 @@ const AllJobs = ({ token }) => {
 
   //to view post
   const ViewPost = (e) => {
-    setPostId(e.target.id);
-    navigate("/jobs/post");
+    if (e.target.id) {
+      setPostId(e.target.id);
+      navigate("/jobs/post");
+    }
   };
 
   //show all posts
@@ -112,6 +119,35 @@ const AllJobs = ({ token }) => {
         : setAvailableCat(false);
     } else {
       setAvailableCat("Available");
+    }
+  };
+
+  //apply to job
+  const applyToJob = (e) => {
+    if (e.target.id) {
+      axios
+        .post(
+          `http://localhost:5000/users/appliedjob/${e.target.id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((result) => {
+          setSuccess(result.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+          getAllJobs();
+        })
+        .catch((err) => {
+          setSuccess(err.response.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+        });
     }
   };
 
@@ -260,13 +296,45 @@ const AllJobs = ({ token }) => {
                       <p>{element.available ? "Yes" : "No"}</p>
                     </div>
                   </div>
-                  <button id={element._id} onClick={ViewPost}>
-                    View job
-                  </button>
+                  <div className="bottomBtns">
+                    {typeOfUser === "employee" ? (
+                      element.applicants.includes(userId) ? (
+                        <button id={element._id} className="withdrawBtn">
+                          <FiMinus id={element._id} className="plus" />
+                          Withdraw job
+                        </button>
+                      ) : (
+                        <button
+                          id={element._id}
+                          className="applyBtn"
+                          onClick={applyToJob}
+                        >
+                          <FiPlus id={element._id} className="plus" /> Apply to
+                          job
+                        </button>
+                      )
+                    ) : (
+                      <></>
+                    )}
+
+                    <button
+                      className="view"
+                      id={element._id}
+                      onClick={ViewPost}
+                    >
+                      <AiOutlineEye className="viewIcon" id={element._id} />
+                      View job
+                    </button>
+                  </div>
                 </div>
               );
             })
         )}
+      </div>
+      <div className={success ? "applyMsg" : "hide"}>
+        <div className="Msg">
+          <p>{success}</p>
+        </div>
       </div>
     </div>
   );
