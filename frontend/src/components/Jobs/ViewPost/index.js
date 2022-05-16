@@ -183,6 +183,34 @@ const ViewPost = ({ token, postId }) => {
     }
   };
 
+  //withdraw job
+  const withdrawJob = (e) => {
+    if (e.target.id) {
+      axios
+        .delete(
+          `http://localhost:5000/users/appliedjob/delete/${e.target.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((result) => {
+          setSuccess(result.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+          getPost();
+        })
+        .catch((err) => {
+          setSuccess(err.response.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+        });
+    }
+  };
+
   useEffect(() => {
     getPost();
   }, []);
@@ -386,7 +414,11 @@ const ViewPost = ({ token, postId }) => {
 
         {typeOfUser === "employee" ? (
           applicants.includes(userId) ? (
-            <button id={post._id} className="withdrawViewBtn">
+            <button
+              id={post._id}
+              className="withdrawViewBtn"
+              onClick={withdrawJob}
+            >
               <FiMinus id={post._id} className="plus" />
               Withdraw job
             </button>

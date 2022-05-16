@@ -151,6 +151,34 @@ const AllJobs = ({ token }) => {
     }
   };
 
+  //withdraw job
+  const withdrawJob = (e) => {
+    if (e.target.id) {
+      axios
+        .delete(
+          `http://localhost:5000/users/appliedjob/delete/${e.target.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((result) => {
+          setSuccess(result.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+          getAllJobs();
+        })
+        .catch((err) => {
+          setSuccess(err.response.data.message);
+          setTimeout(() => {
+            setSuccess("");
+          }, 800);
+        });
+    }
+  };
+
   //useEffect to show all posts
   useEffect(() => {
     getAllJobs();
@@ -299,7 +327,11 @@ const AllJobs = ({ token }) => {
                   <div className="bottomBtns">
                     {typeOfUser === "employee" ? (
                       element.applicants.includes(userId) ? (
-                        <button id={element._id} className="withdrawBtn">
+                        <button
+                          id={element._id}
+                          className="withdrawBtn"
+                          onClick={withdrawJob}
+                        >
                           <FiMinus id={element._id} className="plus" />
                           Withdraw job
                         </button>
