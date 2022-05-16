@@ -19,7 +19,6 @@ const ViewPost = ({ token, postId }) => {
   const [updateId, setUpdateId] = useState("");
   const [updateValue, setUpdateValue] = useState("");
   const [firstValue, setFirstValue] = useState("");
-  const focusRef = useRef("");
   const writeRef = useRef("");
 
   //navigate
@@ -132,6 +131,24 @@ const ViewPost = ({ token, postId }) => {
             setUpdateId("");
           });
       }
+    }
+  };
+
+  //delete comment
+  const deleteComment = (e) => {
+    if (e.target.id) {
+      axios
+        .delete(`http://localhost:5000/comment/${e.target.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          getPost();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -259,7 +276,11 @@ const ViewPost = ({ token, postId }) => {
                           id={el._id}
                           onClick={updateComment}
                         />
-                        <FiTrash2 className="deleteComment" />
+                        <FiTrash2
+                          className="deleteComment"
+                          id={el._id}
+                          onClick={deleteComment}
+                        />
                       </div>
                     ) : (
                       ""
@@ -285,7 +306,11 @@ const ViewPost = ({ token, postId }) => {
                             onClick={updateComment}
                             className="editComment"
                           />
-                          <FiTrash2 className="deleteComment" />
+                          <FiTrash2
+                            id={el._id}
+                            onClick={deleteComment}
+                            className="deleteComment"
+                          />
                         </div>
                       )
                     ) : (
@@ -300,7 +325,11 @@ const ViewPost = ({ token, postId }) => {
 
                 {company === companyName ? (
                   <div className="adminDiv">
-                    <FiTrash2 className="adminDelete" />
+                    <FiTrash2
+                      id={el._id}
+                      onClick={deleteComment}
+                      className="adminDelete"
+                    />
                   </div>
                 ) : (
                   <></>
