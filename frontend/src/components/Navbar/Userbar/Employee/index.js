@@ -20,6 +20,9 @@ const EmployeeIn = () => {
       <Link className="link" to="/jobs">
         Home
       </Link>
+      <Link className="link" to="/appliedjobs">
+      Applied jobs
+      </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout
       </Link>

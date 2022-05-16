@@ -17,6 +17,7 @@ import AllJobs from "./components/Jobs";
 import CreatePost from "./components/Jobs/CreatePost";
 import UpdatePost from "./components/Jobs/UpdatePost";
 import ViewPost from "./components/Jobs/ViewPost";
+import AppliedJobs from "./components/Jobs/AppliedJobs";
 
 //get the token
 export const tokenContext = createContext("");
@@ -56,6 +57,10 @@ function App() {
           <tokenContext.Provider value={{ token, setToken }}>
             <Navbar token={token} />
             <Routes>
+              <Route
+                path="/appliedjobs"
+                element={<AppliedJobs token={token} />}
+              />
               <Route
                 path="/jobs/post"
                 element={<ViewPost token={token} postId={postId} />}
