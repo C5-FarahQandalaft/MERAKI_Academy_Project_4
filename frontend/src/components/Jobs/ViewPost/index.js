@@ -8,12 +8,18 @@ import { FiEdit, FiTrash2, FiSend } from "react-icons/fi";
 const ViewPost = ({ token, postId }) => {
   const typeOfUser = jwt_decode(token).typeOfUser;
   const company = jwt_decode(token).company;
+  const userId = jwt_decode(token).userId;
 
+  //states
   const [post, setPost] = useState([]);
-  const [comanyName, setCompanyName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [applicants, setApplicants] = useState(0);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [updateId, setUpdateId] = useState("");
+  const [updateValue, setUpdateValue] = useState("");
+  const [firstValue, setFirstValue] = useState("");
+  const focusRef = useRef("");
   const writeRef = useRef("");
 
   //navigate
@@ -53,7 +59,7 @@ const ViewPost = ({ token, postId }) => {
   };
 
   //we need to get the post we want to view
-  const getPost = (id) => {
+  const getPost = () => {
     axios
       .get(`http://localhost:5000/jobs/search_3/${postId}`)
       .then((result) => {
@@ -96,18 +102,51 @@ const ViewPost = ({ token, postId }) => {
       });
   };
 
+  //update comment
+  const updateComment = (e) => {
+    if (e.target.id) {
+      if (updateId !== e.target.id) {
+        axios
+          .get(`http://localhost:5000/comment/show/${e.target.id}`)
+          .then((result) => {
+            setUpdateId(e.target.id);
+            setUpdateValue(result.data.comment.comment);
+            setFirstValue(result.data.comment.comment);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .put(
+            `http://localhost:5000/comment/update/${updateId}`,
+            { comment: updateValue },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((result) => {
+            getPost();
+            setUpdateId("");
+          });
+      }
+    }
+  };
+
   useEffect(() => {
-    getPost(postId);
+    getPost();
   }, []);
 
   return (
-    <div>
+    <div className="singleMainContainer">
       <div className="singleContainer">
         <div className="singlePost">
           <div className="postHeader">
-            <h2>{comanyName}</h2>
+            <h2>{companyName}</h2>
             {typeOfUser === "company" ? (
-              company === comanyName ? (
+              company === companyName ? (
                 <div id={post._id} className="controlDiv">
                   <FiEdit
                     id={post._id}
@@ -182,20 +221,93 @@ const ViewPost = ({ token, postId }) => {
       </div>
       <div className="commentDiv">
         <h3>Comments :</h3>
-        {comments.map((el) => {
-          console.log(el);
-          return (
-            <div className="showComment" key={el._id}>
-              <h4>
-                {el.commenterCompany
-                  ? el.commenterCompany.name
-                  : `${el.commenterEmployee.firstName} ${el.commenterEmployee.lastName}`}{" "}
-                :
-              </h4>
-              <p> {el.comment}</p>
-            </div>
-          );
-        })}
+        {comments &&
+          comments.map((el) => {
+            return (
+              <div className="showComment" key={el._id}>
+                <div>
+                  <h4 className="commenter" style={{ display: "flex" }}>
+                    {el.commenterCompany
+                      ? `${el.commenterCompany.name} `
+                      : `${el.commenterEmployee.firstName} ${el.commenterEmployee.lastName}`}
+                    {` `}:
+                  </h4>
+                  <div className="editable">
+                    <p className="comment"> {el.comment}</p>
+
+                    <div
+                      className={updateId === el._id ? "updateComment" : "hide"}
+                    >
+                      <textarea
+                        defaultValue={updateValue}
+                        onChange={(e) => {
+                          e.target.value
+                            ? setUpdateValue(e.target.value)
+                            : setUpdateValue(firstValue);
+                        }}
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                {typeOfUser === "employee" ? (
+                  el.commenterEmployee ? (
+                    el.commenterEmployee._id === userId ? (
+                      <div className="commentBtn">
+                        <FiEdit
+                          className="editComment"
+                          id={el._id}
+                          onClick={updateComment}
+                        />
+                        <FiTrash2 className="deleteComment" />
+                      </div>
+                    ) : (
+                      ""
+                    )
+                  ) : (
+                    ""
+                  )
+                ) : typeOfUser === "company" ? (
+                  el.commenterCompany ? (
+                    el.commenterCompany._id === userId ? (
+                      company === companyName ? (
+                        <div className="commentBtn" style={{ height: "40%" }}>
+                          <FiEdit
+                            id={el._id}
+                            onClick={updateComment}
+                            className="adminEdit"
+                          />
+                        </div>
+                      ) : (
+                        <div className="commentBtn">
+                          <FiEdit
+                            id={el._id}
+                            onClick={updateComment}
+                            className="editComment"
+                          />
+                          <FiTrash2 className="deleteComment" />
+                        </div>
+                      )
+                    ) : (
+                      ""
+                    )
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+
+                {company === companyName ? (
+                  <div className="adminDiv">
+                    <FiTrash2 className="adminDelete" />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            );
+          })}
         <div className="commentSection">
           <form ref={writeRef}>
             <textarea

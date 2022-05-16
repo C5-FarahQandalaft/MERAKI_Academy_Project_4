@@ -129,8 +129,35 @@ const deleteComment = (req, res) => {
     });
 };
 
+//get comment by id
+const getCommentById = (req, res) => {
+  let id = req.params.id;
+  Comment.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).json({
+          success: false,
+          message: `Comment is not found`,
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: `Comment with id : ${id} `,
+       comment: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   createComment,
   updateComment,
   deleteComment,
+  getCommentById,
 };

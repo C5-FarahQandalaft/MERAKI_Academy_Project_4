@@ -8,6 +8,7 @@ const {
   createComment,
   updateComment,
   deleteComment,
+  getCommentById,
 } = require("../controllers/comment");
 
 // creating commentRouter
@@ -21,5 +22,8 @@ commentRouter.delete("/:id", authentication, deleteComment);
 
 //update comment by id
 commentRouter.put("/update/:id", authentication, updateComment);
+
+//get comment by id
+commentRouter.get("/show/:id", getCommentById);
 
 module.exports = commentRouter;
