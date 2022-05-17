@@ -21,6 +21,7 @@ import AppliedJobs from "./components/Jobs/AppliedJobs";
 import PostedJobs from "./components/Jobs/PostedJobs";
 import Footer from "./components/Footer";
 import Search from "./components/Jobs/Search";
+import Contact from "./components/Contact";
 
 //get the token
 export const tokenContext = createContext("");
@@ -55,45 +56,56 @@ function App() {
 
   return (
     <div className="App">
-      <postIdContext.Provider value={{ postId, setPostId }}>
-        <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-          <tokenContext.Provider value={{ token, setToken }}>
-            <Navbar token={token} />
-            <Routes>
-              <Route path="/jobs" element={<AllJobs token={token} />} />
+      <div className="appContainer">
+        <postIdContext.Provider value={{ postId, setPostId }}>
+          <isLoggedInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+            <tokenContext.Provider value={{ token, setToken }}>
+              <Navbar token={token} />
+              <Routes>
+                <Route
+                  path="/jobs/Contact"
+                  element={<Contact token={token} />}
+                />
 
-              <Route
-                path="/postedjobs"
-                element={<PostedJobs token={token} />}
-              />
-              <Route
-                path="/appliedjobs"
-                element={<AppliedJobs token={token} />}
-              />
-              <Route
-                path="/jobs/post"
-                element={<ViewPost token={token} postId={postId} />}
-              />
-              <Route
-                path="/update/post"
-                element={<UpdatePost token={token} postId={postId} />}
-              />
-              <Route
-                path="/create/post"
-                element={<CreatePost token={token} />}
-              />
-              <Route path="/jobs/search" element={<Search token={token} />} />
-              <Route path="/" element={<></>} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/login/employee" element={<LoginEmployee />} />
-              <Route path="/login/company" element={<LoginCompany />} />
-              <Route path="/register/company" element={<RegisterCompany />} />
-              <Route path="/register/employee" element={<RegisterEmployee />} />
-            </Routes>
-            <Footer />
-          </tokenContext.Provider>
-        </isLoggedInContext.Provider>
-      </postIdContext.Provider>
+                <Route path="/jobs" element={<AllJobs token={token} />} />
+
+                <Route
+                  path="/postedjobs"
+                  element={<PostedJobs token={token} />}
+                />
+                <Route
+                  path="/appliedjobs"
+                  element={<AppliedJobs token={token} />}
+                />
+                <Route
+                  path="/jobs/post"
+                  element={<ViewPost token={token} postId={postId} />}
+                />
+                <Route
+                  path="/update/post"
+                  element={<UpdatePost token={token} postId={postId} />}
+                />
+                <Route
+                  path="/create/post"
+                  element={<CreatePost token={token} />}
+                />
+                <Route path="/jobs/search" element={<Search token={token} />} />
+                <Route path="/" element={<></>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/login/employee" element={<LoginEmployee />} />
+                <Route path="/login/company" element={<LoginCompany />} />
+                <Route path="/register/company" element={<RegisterCompany />} />
+                <Route
+                  path="/register/employee"
+                  element={<RegisterEmployee />}
+                />
+                <Route path="*" element={<p>Page Not Found</p>} />
+              </Routes>
+              <Footer />
+            </tokenContext.Provider>
+          </isLoggedInContext.Provider>
+        </postIdContext.Provider>
+      </div>
     </div>
   );
 }

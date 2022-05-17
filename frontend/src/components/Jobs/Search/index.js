@@ -10,9 +10,10 @@ import { postIdContext } from "../../../App";
 const Search = ({ token }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
-  const typeOfUser = jwt_decode(token).typeOfUser;
-  const company = jwt_decode(token).company;
-  const userId = jwt_decode(token).userId;
+
+  const typeOfUser = token ? jwt_decode(token).typeOfUser : null;
+  const company = token ? jwt_decode(token).company : null;
+  const userId = token ? jwt_decode(token).userId : null;
 
   //category states
   const [Remotly, setRemotly] = useState("Remote");
@@ -218,7 +219,7 @@ const Search = ({ token }) => {
       <div className="mainContainer">
         {error ? (
           <p>{error}</p>
-        ) : (
+        ) : posts?(
           posts
             .filter((el) => {
               if (Remotly === "Remote") {
@@ -365,7 +366,7 @@ const Search = ({ token }) => {
                 </div>
               );
             })
-        )}
+        ):<h5>No posts found</h5>}
       </div>
       <div className={success ? "applyMsg" : "hide"}>
         <div className="Msg">

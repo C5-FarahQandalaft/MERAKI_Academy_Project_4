@@ -134,15 +134,6 @@ const CreatePost = ({ token }) => {
 
       <h5>Uploaded image will be displayed here</h5>
       <img src={url} />
-      <br />
-      <br />
-
-      <br />
-
-      <br />
-
-      <br />
-
       <label>Experience</label>
       <select
         onChange={(e) => {

@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { FiEdit, FiTrash2, FiSend, FiPlus, FiMinus } from "react-icons/fi";
 
 const ViewPost = ({ token, postId }) => {
-  const typeOfUser = jwt_decode(token).typeOfUser;
-  const company = jwt_decode(token).company;
-  const userId = jwt_decode(token).userId;
+  const typeOfUser = token ? jwt_decode(token).typeOfUser : null;
+  const company = token ? jwt_decode(token).company : null;
+  const userId = token ? jwt_decode(token).userId : null;
 
   //states
   const [post, setPost] = useState([]);
@@ -38,9 +38,10 @@ const ViewPost = ({ token, postId }) => {
     const mapped = postKeys.map((el) => {
       return el;
     });
+
     setCompanyName(mapped[1].name);
-    setApplicants(mapped[10]);
-    setComments(mapped[11]);
+    setApplicants(mapped[11]);
+    setComments(mapped[12]);
   };
 
   //delete post
@@ -408,17 +409,21 @@ const ViewPost = ({ token, postId }) => {
                 </div>
               );
             })}
-          <div className="commentSection">
-            <form ref={writeRef}>
-              <textarea
-                placeholder="Write a comment..."
-                onChange={writingComment}
-              ></textarea>
-              <button id={post._id} onClick={addComment}>
-                <FiSend className="send-icon" />
-              </button>
-            </form>
-          </div>
+          {typeOfUser ? (
+            <div className="commentSection">
+              <form ref={writeRef}>
+                <textarea
+                  placeholder="Write a comment..."
+                  onChange={writingComment}
+                ></textarea>
+                <button id={post._id} onClick={addComment}>
+                  <FiSend className="send-icon" />
+                </button>
+              </form>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         {typeOfUser === "employee" ? (

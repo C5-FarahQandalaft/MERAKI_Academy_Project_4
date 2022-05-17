@@ -17,9 +17,9 @@ import { postIdContext } from "../../App";
 const AllJobs = ({ token }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState("");
-  const typeOfUser = jwt_decode(token).typeOfUser;
-  const company = jwt_decode(token).company;
-  const userId = jwt_decode(token).userId;
+  const typeOfUser = token ? jwt_decode(token).typeOfUser : null;
+  const company = token ? jwt_decode(token).company : null;
+  const userId = token ? jwt_decode(token).userId : null;
 
   //category states
   const [totalPages, setTotalPages] = useState([]);
