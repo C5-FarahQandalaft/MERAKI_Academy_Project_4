@@ -9,6 +9,7 @@ const {
   findPostsByCompany,
   findPostsByTitle,
   findPostById,
+  getPaginate,
 } = require("../controllers/jobs");
 
 // Middleware
@@ -19,7 +20,7 @@ const authorization = require("../middleware/authorization");
 const jobsRouter = express.Router();
 
 //get all posts
-jobsRouter.get("/", getAllJobs);
+jobsRouter.get("/", getPaginate);
 
 // create post
 jobsRouter.post(
@@ -44,6 +45,9 @@ jobsRouter.delete(
   authorization("company"),
   deletePostById
 );
+
+//get paginated jobs
+jobsRouter.get("/search", getAllJobs);
 
 // get posts by company name
 jobsRouter.get("/search_1/:name", findPostsByCompany);

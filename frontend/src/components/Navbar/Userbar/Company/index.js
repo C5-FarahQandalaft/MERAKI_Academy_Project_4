@@ -20,6 +20,9 @@ const CompanyIn = () => {
       <Link className="link" to="/jobs">
         Home
       </Link>
+      <Link className="link" to="/jobs/search">
+       Search jobs
+      </Link>
       <Link className="link" to="/postedjobs">
         Posted jobs
       </Link>

@@ -88,7 +88,63 @@ const getAllJobs = (req, res) => {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
-          jobs: jobs,
+          jobs: jobs.reverse(),
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: `No jobs Yet`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: `Server Error`,
+        err: err.message,
+      });
+    });
+};
+
+//this function returns paginated jobs
+const getPaginate = (req, res) => {
+  const { page = 1, limit = 4 } = req.query;
+
+  Post.find({})
+    .limit(limit * 1)
+    .skip((page - 1) * limit)
+    .populate([
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterCompany",
+          model: "Company",
+          select: "name -_id",
+        },
+      },
+      {
+        path: "comments",
+        model: "Comment",
+        select: "-_id",
+        populate: {
+          path: "commenterEmployee",
+          model: "Employee",
+          select: "firstName lastName -_id",
+        },
+      },
+    ])
+    .populate("company", "name -_id")
+    .then(async (jobs) => {
+      if (jobs.length) {
+        const count = await Post.estimatedDocumentCount();
+        res.status(200).json({
+          success: true,
+          message: `All the jobs`,
+          jobs: jobs.reverse(),
+          totalPages: Math.ceil(count / limit),
+          currentPage: page,
         });
       } else {
         res.status(200).json({
@@ -334,4 +390,5 @@ module.exports = {
   findPostsByCompany,
   findPostsByTitle,
   findPostById,
+  getPaginate,
 };

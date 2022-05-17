@@ -19,6 +19,8 @@ import UpdatePost from "./components/Jobs/UpdatePost";
 import ViewPost from "./components/Jobs/ViewPost";
 import AppliedJobs from "./components/Jobs/AppliedJobs";
 import PostedJobs from "./components/Jobs/PostedJobs";
+import Footer from "./components/Footer";
+import Search from "./components/Jobs/Search";
 
 //get the token
 export const tokenContext = createContext("");
@@ -58,6 +60,8 @@ function App() {
           <tokenContext.Provider value={{ token, setToken }}>
             <Navbar token={token} />
             <Routes>
+              <Route path="/jobs" element={<AllJobs token={token} />} />
+
               <Route
                 path="/postedjobs"
                 element={<PostedJobs token={token} />}
@@ -78,7 +82,7 @@ function App() {
                 path="/create/post"
                 element={<CreatePost token={token} />}
               />
-              <Route path="/jobs" element={<AllJobs token={token} />} />
+              <Route path="/jobs/search" element={<Search token={token} />} />
               <Route path="/" element={<></>} />
               <Route path="/login" element={<Login />} />
               <Route path="/login/employee" element={<LoginEmployee />} />
@@ -86,6 +90,7 @@ function App() {
               <Route path="/register/company" element={<RegisterCompany />} />
               <Route path="/register/employee" element={<RegisterEmployee />} />
             </Routes>
+            <Footer />
           </tokenContext.Provider>
         </isLoggedInContext.Provider>
       </postIdContext.Provider>
