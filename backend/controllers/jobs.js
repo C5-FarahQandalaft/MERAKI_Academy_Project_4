@@ -6,6 +6,7 @@ const createPost = (req, res) => {
   const {
     title,
     description,
+    url,
     salary,
     location,
     remote,
@@ -16,6 +17,7 @@ const createPost = (req, res) => {
   const newPost = new Post({
     company: req.token.userId,
     title,
+    url,
     description,
     salary,
     location,
@@ -88,7 +90,7 @@ const getAllJobs = (req, res) => {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
-          jobs: jobs.reverse(),
+          jobs: jobs,
         });
       } else {
         res.status(200).json({
@@ -142,7 +144,7 @@ const getPaginate = (req, res) => {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
-          jobs: jobs.reverse(),
+          jobs: jobs,
           totalPages: Math.ceil(count / limit),
           currentPage: page,
         });

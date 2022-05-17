@@ -153,7 +153,7 @@ const AllJobs = ({ token }) => {
       <div className="mainContainer">
         {error ? (
           <p>{error}</p>
-        ) : (
+        ) : posts ? (
           posts.map((element) => {
             return (
               <div key={element._id}>
@@ -189,32 +189,43 @@ const AllJobs = ({ token }) => {
                       <></>
                     )}
                   </div>
-
                   <div className="info">
                     <h3>Job title : </h3>
                     <p>{element.title}</p>
                   </div>
 
-                  <div className="info">
-                    <h3>Experience : </h3>
-                    <p>{element.experience}</p>
-                  </div>
+                  {element.url ? (
+                    <div className="info">
+                      <h3>Job description : </h3>
+                      <img src={element.url} />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="info">
+                        <h3>Experience : </h3>
+                        <p>{element.experience}</p>
+                      </div>
 
-                  <div className="info">
-                    <h3>Job type : </h3>
-                    <p>{element.type}</p>
-                  </div>
+                      <div className="info">
+                        <h3>Job type : </h3>
+                        <p>{element.type}</p>
+                      </div>
 
+                      <div className="info">
+                        <h3>Appliacants : </h3>
+                        <p>{element.applicants.length}</p>
+                      </div>
+
+                      <div className="info">
+                        <h3>Remote : </h3>
+                        <p>{element.remote ? "Yes" : "No"}</p>
+                      </div>
+                    </>
+                  )}
                   <div className="info">
                     <h3>Appliacants : </h3>
                     <p>{element.applicants.length}</p>
                   </div>
-
-                  <div className="info">
-                    <h3>Remote : </h3>
-                    <p>{element.remote ? "Yes" : "No"}</p>
-                  </div>
-
                   <div className="info">
                     <h3>Available : </h3>
                     <p>{element.available ? "Yes" : "No"}</p>
@@ -253,50 +264,56 @@ const AllJobs = ({ token }) => {
               </div>
             );
           })
+        ) : (
+          <h3>No posts found</h3>
         )}
       </div>
+      {posts ? (
+        <div className="pagination">
+          <button
+            onClick={(e) => {
+              --pageRef.current;
+              getAllJobs();
+              window.scrollTo(0, 0);
+            }}
+          >
+            <FiArrowLeft className="Arrow" />
+          </button>
+
+          <ul className="pages">
+            {totalPages.map((el) => {
+              return (
+                <li
+                  id={el}
+                  key={el}
+                  onClick={(e) => {
+                    pageRef.current = e.target.id;
+                    getAllJobs();
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  {el}
+                </li>
+              );
+            })}
+          </ul>
+          <button
+            onClick={(e) => {
+              ++pageRef.current;
+              getAllJobs();
+              window.scrollTo(0, 0);
+            }}
+          >
+            <FiArrowRight className="Arrow" />
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className={success ? "applyMsg" : "hide"}>
         <div className="Msg">
           <p>{success}</p>
         </div>
-      </div>
-      <div className="pagination">
-        <button
-          onClick={(e) => {
-            --pageRef.current;
-            getAllJobs();
-            window.scrollTo(0, 0);
-          }}
-        >
-          <FiArrowLeft className="Arrow" />
-        </button>
-
-        <ul className="pages">
-          {totalPages.map((el) => {
-            return (
-              <li
-                id={el}
-                key={el}
-                onClick={(e) => {
-                  pageRef.current = e.target.id;
-                  getAllJobs();
-                  window.scrollTo(0, 0);
-                }}
-              >
-                {el}
-              </li>
-            );
-          })}
-        </ul>
-        <button
-          onClick={(e) => {
-            ++pageRef.current;
-            getAllJobs();
-            window.scrollTo(0, 0);
-          }}
-        >
-          <FiArrowRight className="Arrow" />
-        </button>
       </div>
     </div>
   );

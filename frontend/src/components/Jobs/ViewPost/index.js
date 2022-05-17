@@ -259,6 +259,15 @@ const ViewPost = ({ token, postId }) => {
             <p>{post.description}</p>
           </div>
 
+          {post.url ? (
+            <div className="info">
+              <h3>Job description : </h3>
+              <img src={post.url} />
+            </div>
+          ) : (
+            <></>
+          )}
+
           <div className="singleInfo">
             <h3>Experience : </h3>
             <p>{post.experience}</p>

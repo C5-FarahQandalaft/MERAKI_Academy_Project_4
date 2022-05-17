@@ -349,3 +349,7 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+img {
+  height: 38.5vh;
+}

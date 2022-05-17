@@ -294,6 +294,14 @@ const Search = ({ token }) => {
                       <h3>Job title : </h3>
                       <p>{element.title}</p>
                     </div>
+                    {element.url ? (
+                      <div className="info">
+                        <h3>Job description : </h3>
+                        <img src={element.url} />
+                      </div>
+                    ) : (
+                      <></>
+                    )}
 
                     <div className="info">
                       <h3>Experience : </h3>

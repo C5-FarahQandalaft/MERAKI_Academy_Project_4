@@ -1,5 +1,4 @@
 .singleMainContainer {
-  height: 100vh;
   width: 100%;
   display: grid;
 
@@ -8,7 +7,6 @@
 }
 
 .singleContainer {
-  height: 100%;
   width: 35%;
   display: flex;
   flex-direction: column;
@@ -17,8 +15,6 @@
 }
 
 .singlePost {
-  height: 95%;
-  width: 30vw;
   border: 2px solid rgba(25, 25, 25, 0.846);
   padding: 0px 0.7%;
   border-radius: 5px;
@@ -80,7 +76,6 @@
   width: 90%;
   position: relative;
   right: 3%;
-
 }
 
 .commentSection textarea {

@@ -25,6 +25,8 @@ const UpdatePost = ({ token, postId }) => {
 
   const [available, setAvailable] = useState(post.available);
 
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState(post.url);
   //to show the result and post
   const [result, setResult] = useState("");
 
@@ -47,6 +49,22 @@ const UpdatePost = ({ token, postId }) => {
     }
   };
 
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "farrahqa");
+    data.append("cloud_name", "dtiuiyrdu");
+    fetch("https://api.cloudinary.com/v1_1/dtiuiyrdu/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUrl(data.url);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const update = async () => {
     await axios
       .put(
@@ -54,6 +72,7 @@ const UpdatePost = ({ token, postId }) => {
         {
           title,
           description,
+          url,
           salary: salary.current,
           experience,
           location,
@@ -111,6 +130,27 @@ const UpdatePost = ({ token, postId }) => {
           setResult("");
         }}
       ></textarea>
+
+      <label>Image description</label>
+
+      <input
+        type="file"
+        onChange={(e) => {
+          setImage(e.target.files[0]);
+        }}
+      ></input>
+      <button onClick={uploadImage}>Upload</button>
+
+      <h5>Uploaded image will be displayed here</h5>
+      <img src={url} />
+      <br />
+      <br />
+
+      <br />
+
+      <br />
+
+      <br />
 
       <label>Experience</label>
       <select

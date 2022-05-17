@@ -58,11 +58,6 @@ const AppliedJobs = ({ token }) => {
     setSearchTitle(e.target.value);
   };
 
-  //clear search
-  const clearSearch = (e) => {
-    window.location.reload(false);
-  };
-
   //filter by remote
   const filterRemote = (e) => {
     let remoteAnswer = e.target.value;
@@ -165,7 +160,6 @@ const AppliedJobs = ({ token }) => {
   return (
     <div className="Container">
       <div className="filter">
-        <button onClick={clearSearch}>Clear Search </button>
         <input
           placeholder="Search Job title or Company"
           onChange={seachByTitle}

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
+  url: { type: String },
   title: { type: String, required: true },
   description: { type: String, required: true },
   experience: { type: String, default: "Entry-level" },
