@@ -1,4 +1,4 @@
-import "../style.css";
+import "./style.css";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +45,9 @@ export const RegisterEmployee = () => {
                 })
                 .then((result) => {
                   setRegistered(result.data.message);
+                  setTimeout(() => {
+                    navigate("/login");
+                  }, 300);
                 })
                 .catch((error) => {
                   setRegistered(error.response.data.message);
@@ -76,144 +79,152 @@ export const RegisterEmployee = () => {
 
   //call-back to close pop
   const close = () => {
-    navigate("/");
+    navigate("/register");
   };
 
   return (
-    <div className="regContainer">
-      <div className="closing">
-        <button className="closeBtn" onClick={close}>
-          &times;
-        </button>
+    <div className="regMainContainer">
+      <div className="regContainer">
+        <div className="closing">
+          <button className="closeBtn" onClick={close}>
+            &times;
+          </button>
+        </div>
+        <h3>let's create your account</h3>
+
+        {error === "server" ? (
+          <label>First name*</label>
+        ) : error.includes("all") ? (
+          <label>First name*</label>
+        ) : (
+          <label>First name</label>
+        )}
+
+        <input
+          type="text"
+          className={
+            error === "server" ? "error" : error === "all" ? "error" : ""
+          }
+          placeholder="First name"
+          onChange={(e) => {
+            setFirstName(e.target.value);
+            setRegistered("");
+            setError("");
+          }}
+        />
+
+        {error === "server" ? (
+          <label>Last Name*</label>
+        ) : error.includes("all") ? (
+          <label>Last Name*</label>
+        ) : (
+          <label>Last Name</label>
+        )}
+        <input
+          type="text"
+          className={
+            error === "server" ? "error" : error === "all" ? "error" : ""
+          }
+          placeholder="Last Name"
+          onChange={(e) => {
+            setLastName(e.target.value);
+            setError("");
+          }}
+        />
+
+        <label>Age</label>
+        <input
+          type="number"
+          placeholder="Age"
+          onChange={(e) => {
+            setAge(e.target.value);
+          }}
+        />
+
+        <label>Degree</label>
+        <input
+          type="text"
+          placeholder="Degree"
+          onChange={(e) => {
+            setDegree(e.target.value);
+          }}
+        />
+        <label>Country</label>
+        <input
+          type="text"
+          placeholder="Country"
+          onChange={(e) => {
+            setCountry(e.target.value);
+          }}
+        />
+        {error === "all" ? (
+          <label>Email*</label>
+        ) : error.includes("email") ? (
+          <label>Email*</label>
+        ) : (
+          <label>Email</label>
+        )}
+        <input
+          type="email"
+          className={
+            error === "email" ? "error" : error === "all" ? "error" : ""
+          }
+          placeholder="Email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setRegistered("");
+            setError("");
+          }}
+        />
+
+        {error === "all" ? (
+          <label>Password*</label>
+        ) : error.includes("password") ? (
+          <label>Password*</label>
+        ) : (
+          <label>Password</label>
+        )}
+
+        <input
+          type="password"
+          className={
+            error === "password" ? "error" : error === "all" ? "error" : ""
+          }
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setRegistered("");
+            setError("");
+          }}
+        />
+
+        {error === "all" ? (
+          <label>Repeat password*</label>
+        ) : error.includes("repeat") ? (
+          <label>Repeat password*</label>
+        ) : (
+          <label>Repeat password</label>
+        )}
+        <input
+          type="password"
+          className={
+            error === "repeat" ? "error" : error === "all" ? "error" : ""
+          }
+          placeholder="Repeat password"
+          onChange={(e) => {
+            setRepeatPassword(e.target.value);
+            setRegistered("");
+            setError("");
+          }}
+        />
+        <button className="continue" onClick={create}>Continue</button>
       </div>
-      <h3>let's create your account</h3>
-
-      {error === "server" ? (
-        <label>First name*</label>
-      ) : error.includes("all") ? (
-        <label>First name*</label>
-      ) : (
-        <label>First name</label>
-      )}
-
-      <input
-        type="text"
-        className={
-          error === "server" ? "error" : error === "all" ? "error" : ""
-        }
-        placeholder="First name"
-        onChange={(e) => {
-          setFirstName(e.target.value);
-          setRegistered("");
-          setError("");
-        }}
-      />
-
-      {error === "server" ? (
-        <label>Last Name*</label>
-      ) : error.includes("all") ? (
-        <label>Last Name*</label>
-      ) : (
-        <label>Last Name</label>
-      )}
-      <input
-        type="text"
-        className={
-          error === "server" ? "error" : error === "all" ? "error" : ""
-        }
-        placeholder="Last Name"
-        onChange={(e) => {
-          setLastName(e.target.value);
-          setError("");
-        }}
-      />
-
-      <label>Age</label>
-      <input
-        type="number"
-        placeholder="Age"
-        onChange={(e) => {
-          setAge(e.target.value);
-        }}
-      />
-
-      <label>Degree</label>
-      <input
-        type="text"
-        placeholder="Degree"
-        onChange={(e) => {
-          setDegree(e.target.value);
-        }}
-      />
-      <label>Country</label>
-      <input
-        type="text"
-        placeholder="Country"
-        onChange={(e) => {
-          setCountry(e.target.value);
-        }}
-      />
-      {error === "all" ? (
-        <label>Email*</label>
-      ) : error.includes("email") ? (
-        <label>Email*</label>
-      ) : (
-        <label>Email</label>
-      )}
-      <input
-        type="email"
-        className={error === "email" ? "error" : error === "all" ? "error" : ""}
-        placeholder="Email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setRegistered("");
-          setError("");
-        }}
-      />
-
-      {error === "all" ? (
-        <label>Password*</label>
-      ) : error.includes("password") ? (
-        <label>Password*</label>
-      ) : (
-        <label>Password</label>
-      )}
-
-      <input
-        type="password"
-        className={
-          error === "password" ? "error" : error === "all" ? "error" : ""
-        }
-        placeholder="Password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-          setRegistered("");
-          setError("");
-        }}
-      />
-
-      {error === "all" ? (
-        <label>Repeat password*</label>
-      ) : error.includes("repeat") ? (
-        <label>Repeat password*</label>
-      ) : (
-        <label>Repeat password</label>
-      )}
-      <input
-        type="password"
-        className={
-          error === "repeat" ? "error" : error === "all" ? "error" : ""
-        }
-        placeholder="Repeat password"
-        onChange={(e) => {
-          setRepeatPassword(e.target.value);
-          setRegistered("");
-          setError("");
-        }}
-      />
-      <button onClick={create}>Continue</button>
       {registered ? (
-        <p className={error ? "message" : "success"}>{registered}</p>
+        <div className={error ? "check" : "success"}>
+          <div className="msgCenter">
+            <p className="Message">{registered}</p>
+          </div>
+        </div>
       ) : (
         <></>
       )}

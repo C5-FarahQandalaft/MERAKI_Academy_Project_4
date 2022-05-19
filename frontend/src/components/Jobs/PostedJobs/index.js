@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import "../style.css";
-import { FiEdit, FiTrash2, FiPlus, FiMinus } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiSearch } from "react-icons/fi";
 import { AiOutlineEye } from "react-icons/ai";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -127,156 +127,164 @@ const PostedJobs = ({ token }) => {
   return (
     <div className="Container">
       <div className="filter">
-        <input
-          placeholder="Search Job title or Company"
-          onChange={seachByTitle}
-        />
+        <div className="searchBar">
+          <h2>My jobs :</h2>
+          <FiSearch className="searchIcon" />
+          <input
+            className="searchInput"
+            placeholder="Search Job title or Company"
+            onChange={seachByTitle}
+          />
+        </div>
+        <div className="selectors">
+          <select onChange={filterExperience}>
+            <option>Experience</option>
+            <option>Entry-level</option>
+            <option>Intermediate</option>
+            <option>Mid-level</option>
+            <option>Senior-level</option>
+          </select>
 
-        <select onChange={filterExperience}>
-          <option>Experience</option>
-          <option>Entry-level</option>
-          <option>Intermediate</option>
-          <option>Mid-level</option>
-          <option>Senior-level</option>
-        </select>
-
-        <select onChange={filterType}>
-          <option>Job type</option>
-          <option>Full-time</option>
-          <option>Part-time</option>
-          <option>Contract</option>
-          <option>internship</option>
-        </select>
-        <select onChange={filterRemote}>
-          <option>Remote</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-        <select onChange={filterAvailable}>
-          <option>Available</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
+          <select onChange={filterType}>
+            <option>Job type</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>internship</option>
+          </select>
+          <select onChange={filterRemote}>
+            <option>Remote</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+          <select onChange={filterAvailable}>
+            <option>Available</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
       </div>
       <div className="mainContainer">
-        {error ? (
-          <p>{error}</p>
-        ) : posts ? (
-          posts
-            .filter((el) => {
-              if (Remotly === "Remote") {
-                return el;
-              } else {
-                return el.remote === Remotly;
-              }
-            })
-            .filter((el) => {
-              if (availableCat === "Available") {
-                return el;
-              } else {
-                return el.remote === availableCat;
-              }
-            })
-            .filter((el) => {
-              if (typeCat === "Job type") {
-                return el;
-              } else {
-                return el.type === typeCat;
-              }
-            })
-            .filter((el) => {
-              if (experienceCat === "Experience") {
-                return el;
-              } else {
-                return el.experience === experienceCat;
-              }
-            })
-            .filter((el) => {
-              return (
-                el.title.includes(searchTitle) ||
-                el.company.name.includes(searchTitle)
-              );
-            })
-            .map((element) => {
-              return (
-                <div key={element._id}>
-                  <div className="post">
-                    <div className="postHeader">
-                      <h2>{element.company.name}</h2>
+        <div className="showPosts">
+          {error ? (
+            <p>{error}</p>
+          ) : posts ? (
+            posts
+              .filter((el) => {
+                if (Remotly === "Remote") {
+                  return el;
+                } else {
+                  return el.remote === Remotly;
+                }
+              })
+              .filter((el) => {
+                if (availableCat === "Available") {
+                  return el;
+                } else {
+                  return el.remote === availableCat;
+                }
+              })
+              .filter((el) => {
+                if (typeCat === "Job type") {
+                  return el;
+                } else {
+                  return el.type === typeCat;
+                }
+              })
+              .filter((el) => {
+                if (experienceCat === "Experience") {
+                  return el;
+                } else {
+                  return el.experience === experienceCat;
+                }
+              })
+              .filter((el) => {
+                return (
+                  el.title.includes(searchTitle) ||
+                  el.company.name.includes(searchTitle)
+                );
+              })
+              .map((element) => {
+                return (
+                  <div key={element._id}>
+                    <div className="post">
+                      <div className="postHeader">
+                        <h2>{element.company.name}</h2>
 
-                      {typeOfUser === "company" ? (
-                        company === element.company.name ? (
-                          <div id={element._id} className="controlDiv">
-                            <FiEdit
-                              id={element._id}
-                              className="edit"
-                              onClick={(e) => {
-                                const id = e.target.id;
-                                showUpdateForm(id);
-                              }}
-                            />
+                        {typeOfUser === "company" ? (
+                          company === element.company.name ? (
+                            <div id={element._id} className="controlDiv">
+                              <FiEdit
+                                id={element._id}
+                                className="edit"
+                                onClick={(e) => {
+                                  const id = e.target.id;
+                                  showUpdateForm(id);
+                                }}
+                              />
 
-                            <FiTrash2
-                              id={element._id}
-                              className="delete"
-                              onClick={(e) => {
-                                const id = e.target.id;
-                                deletePost(id);
-                              }}
-                            />
-                          </div>
+                              <FiTrash2
+                                id={element._id}
+                                className="delete"
+                                onClick={(e) => {
+                                  const id = e.target.id;
+                                  deletePost(id);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <></>
+                          )
                         ) : (
                           <></>
-                        )
-                      ) : (
-                        <></>
-                      )}
-                    </div>
+                        )}
+                      </div>
 
-                    <div className="info">
-                      <h3>Job title : </h3>
-                      <p>{element.title}</p>
-                    </div>
+                      <div className="info">
+                        <h3>Job title : </h3>
+                        <p>{element.title}</p>
+                      </div>
 
-                    <div className="info">
-                      <h3>Experience : </h3>
-                      <p>{element.experience}</p>
-                    </div>
+                      <div className="info">
+                        <h3>Experience : </h3>
+                        <p>{element.experience}</p>
+                      </div>
 
-                    <div className="info">
-                      <h3>Job type : </h3>
-                      <p>{element.type}</p>
-                    </div>
+                      <div className="info">
+                        <h3>Job type : </h3>
+                        <p>{element.type}</p>
+                      </div>
 
-                    <div className="info">
-                      <h3>Appliacants : </h3>
-                      <p>{element.applicants.length}</p>
-                    </div>
+                      <div className="info">
+                        <h3>Appliacants : </h3>
+                        <p>{element.applicants.length}</p>
+                      </div>
 
-                    <div className="info">
-                      <h3>Remote : </h3>
-                      <p>{element.remote ? "Yes" : "No"}</p>
-                    </div>
+                      <div className="info">
+                        <h3>Remote : </h3>
+                        <p>{element.remote ? "Yes" : "No"}</p>
+                      </div>
 
-                    <div className="info">
-                      <h3>Available : </h3>
-                      <p>{element.available ? "Yes" : "No"}</p>
+                      <div className="info">
+                        <h3>Available : </h3>
+                        <p>{element.available ? "Yes" : "No"}</p>
+                      </div>
                     </div>
+                    <button
+                      className="viewCompany"
+                      id={element._id}
+                      onClick={ViewPost}
+                    >
+                      <AiOutlineEye className="viewIcon" id={element._id} />
+                      View job
+                    </button>
                   </div>
-                  <button
-                    className="viewCompany"
-                    id={element._id}
-                    onClick={ViewPost}
-                  >
-                    <AiOutlineEye className="viewIcon" id={element._id} />
-                    View job
-                  </button>
-                </div>
-              );
-            })
-        ) : (
-          <p>No posts found.</p>
-        )}
+                );
+              })
+          ) : (
+            <h5 className="failed">No posts found.</h5>
+          )}
+        </div>
       </div>
     </div>
   );

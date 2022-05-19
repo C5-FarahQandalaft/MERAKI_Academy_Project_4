@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(22, 22, 253, 0.904);
+  color: white;
+}
+
+.header h2 {
+  padding: 0 2%;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 0.8em;
+  height: 3.5em;
+  width: 6.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link:hover {
+  transform: scale(1.03);
+  background-color: darkblue;
+}

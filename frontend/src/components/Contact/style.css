@@ -1,0 +1,124 @@
+.contactContainer {
+  grid-area: main;
+  position: relative;
+  display: grid;
+  grid-template-areas: "left left";
+  position: relative;
+  height: 100vh;
+}
+
+.contactBackground {
+  position: absolute;
+  right: 0%;
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652889200/undraw_Contact_us_re_4qqt_upjvlz.png");
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 80vw;
+  z-index: -1;
+}
+
+.emailSend {
+  height: 100vh;
+  position: absolute;
+  left: 2%;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactInfo {
+  margin: 2% 0;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.emailSend h2 {
+  margin-top: 2%;
+  color: orangered;
+  font-size: 2em;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.contactInfo h3 {
+  font-size: 1.5em;
+  color: black;
+}
+
+.contactInfo h4 {
+  color: black;
+}
+
+.contactInfo label {
+  color: black;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+.contactInfo input {
+  padding: 3px 0;
+  margin: 5px 0;
+  width: 60%;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.contactInfo textarea {
+  resize: none;
+  width: 60%;
+  border-radius: 3px;
+  border: 1px solid;
+  overflow: hidden;
+  height: 10vh;
+}
+
+.contactInfo button {
+  color: white;
+  width: 20%;
+  margin-top: 2%;
+  height: 15%;
+  cursor: pointer;
+  border-style: none;
+  border-radius: 5px;
+  background-color: blue;
+}
+
+.contactInfo button:hover {
+  transform: scale(1.03);
+}
+
+.msgPos {
+  position: fixed;
+  right: 1%;
+  top: 10%;
+  height: 8%;
+  width: 20%;
+  background-color: rgba(194, 194, 194, 0.704);
+  border-radius: 5px;
+}
+
+.msgPosHide {
+  display: none;
+}
+
+.msgCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.Message {
+  display: flex;
+  align-items: center;
+}
+
+.correct {
+  color: green;
+  margin-left: 1%;
+}

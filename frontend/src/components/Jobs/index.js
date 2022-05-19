@@ -30,6 +30,7 @@ const AllJobs = ({ token }) => {
 
   //apply to job
   const [success, setSuccess] = useState("");
+  const [fault, setFault] = useState("");
 
   //to update post
   const { setPostId } = useContext(postIdContext);
@@ -77,7 +78,8 @@ const AllJobs = ({ token }) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(() => {
+        .then((result) => {
+          setFault(result.data.message);
           getAllJobs();
         })
         .catch((error) => {
@@ -107,9 +109,9 @@ const AllJobs = ({ token }) => {
           getAllJobs();
         })
         .catch((err) => {
-          setSuccess(err.response.data.message);
+          setFault(err.response.data.message);
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
         });
     }
@@ -128,16 +130,17 @@ const AllJobs = ({ token }) => {
           }
         )
         .then((result) => {
-          setSuccess(result.data.message);
+          setFault(result.data.message);
+
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
           getAllJobs();
         })
         .catch((err) => {
-          setSuccess(err.response.data.message);
+          setFault(err.response.data.message);
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
         });
     }
@@ -151,168 +154,187 @@ const AllJobs = ({ token }) => {
   return (
     <div className="Container">
       <div className="mainContainer">
-        {error ? (
-          <p>{error}</p>
-        ) : posts ? (
-          posts.map((element) => {
-            return (
-              <div key={element._id}>
-                <div className="post">
-                  <div className="postHeader">
-                    <h2>{element.company.name}</h2>
+        <div className="showPosts">
+          {error ? (
+            <p>{error}</p>
+          ) : posts ? (
+            posts.map((element) => {
+              return (
+                <div key={element._id}>
+                  <div className="post">
+                    <div className="postHeader">
+                      <h2>{element.company.name}</h2>
 
-                    {typeOfUser === "company" ? (
-                      company === element.company.name ? (
-                        <div id={element._id} className="controlDiv">
-                          <FiEdit
-                            id={element._id}
-                            className="edit"
-                            onClick={(e) => {
-                              const id = e.target.id;
-                              showUpdateForm(id);
-                            }}
-                          />
+                      {typeOfUser === "company" ? (
+                        company === element.company.name ? (
+                          <div id={element._id} className="controlDiv">
+                            <FiEdit
+                              id={element._id}
+                              className="edit"
+                              onClick={(e) => {
+                                const id = e.target.id;
+                                showUpdateForm(id);
+                              }}
+                            />
 
-                          <FiTrash2
-                            id={element._id}
-                            className="delete"
-                            onClick={(e) => {
-                              const id = e.target.id;
-                              deletePost(id);
-                            }}
-                          />
-                        </div>
+                            <FiTrash2
+                              id={element._id}
+                              className="delete"
+                              onClick={(e) => {
+                                const id = e.target.id;
+                                deletePost(id);
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        )
                       ) : (
                         <></>
+                      )}
+                    </div>
+                    <div className="info">
+                      <h3>Job title : </h3>
+                      <p>{element.title}</p>
+                    </div>
+
+                    {element.url ? (
+                      <div className="info">
+                        <h3>Job description : </h3>
+                        <img src={element.url} />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="info">
+                          <h3>Experience : </h3>
+                          <p>{element.experience}</p>
+                        </div>
+
+                        <div className="info">
+                          <h3>Job type : </h3>
+                          <p>{element.type}</p>
+                        </div>
+
+                        <div className="info">
+                          <h3>Appliacants : </h3>
+                          <p>{element.applicants.length}</p>
+                        </div>
+
+                        <div className="info">
+                          <h3>Remote : </h3>
+                          <p>{element.remote ? "Yes" : "No"}</p>
+                        </div>
+                      </>
+                    )}
+                    <div className="info">
+                      <h3>Appliacants : </h3>
+                      <p>{element.applicants.length}</p>
+                    </div>
+                    <div className="info">
+                      <h3>Available : </h3>
+                      <p>{element.available ? "Yes" : "No"}</p>
+                    </div>
+                  </div>
+                  <div className="bottomBtns">
+                    {typeOfUser === "employee" ? (
+                      element.applicants.includes(userId) ? (
+                        <button
+                          id={element._id}
+                          className="withdrawBtn"
+                          onClick={withdrawJob}
+                        >
+                          <FiMinus id={element._id} className="plus" />
+                          Withdraw job
+                        </button>
+                      ) : (
+                        <button
+                          id={element._id}
+                          className="applyBtn"
+                          onClick={applyToJob}
+                        >
+                          <FiPlus id={element._id} className="plus" /> Apply to
+                          job
+                        </button>
                       )
                     ) : (
                       <></>
                     )}
-                  </div>
-                  <div className="info">
-                    <h3>Job title : </h3>
-                    <p>{element.title}</p>
-                  </div>
 
-                  {element.url ? (
-                    <div className="info">
-                      <h3>Job description : </h3>
-                      <img src={element.url} />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="info">
-                        <h3>Experience : </h3>
-                        <p>{element.experience}</p>
-                      </div>
-
-                      <div className="info">
-                        <h3>Job type : </h3>
-                        <p>{element.type}</p>
-                      </div>
-
-                      <div className="info">
-                        <h3>Appliacants : </h3>
-                        <p>{element.applicants.length}</p>
-                      </div>
-
-                      <div className="info">
-                        <h3>Remote : </h3>
-                        <p>{element.remote ? "Yes" : "No"}</p>
-                      </div>
-                    </>
-                  )}
-                  <div className="info">
-                    <h3>Appliacants : </h3>
-                    <p>{element.applicants.length}</p>
-                  </div>
-                  <div className="info">
-                    <h3>Available : </h3>
-                    <p>{element.available ? "Yes" : "No"}</p>
+                    <button
+                      className="view"
+                      id={element._id}
+                      onClick={ViewPost}
+                    >
+                      <AiOutlineEye className="viewIcon" id={element._id} />
+                      View job
+                    </button>
                   </div>
                 </div>
-                <div className="bottomBtns">
-                  {typeOfUser === "employee" ? (
-                    element.applicants.includes(userId) ? (
-                      <button
-                        id={element._id}
-                        className="withdrawBtn"
-                        onClick={withdrawJob}
-                      >
-                        <FiMinus id={element._id} className="plus" />
-                        Withdraw job
-                      </button>
-                    ) : (
-                      <button
-                        id={element._id}
-                        className="applyBtn"
-                        onClick={applyToJob}
-                      >
-                        <FiPlus id={element._id} className="plus" /> Apply to
-                        job
-                      </button>
-                    )
-                  ) : (
-                    <></>
-                  )}
-
-                  <button className="view" id={element._id} onClick={ViewPost}>
-                    <AiOutlineEye className="viewIcon" id={element._id} />
-                    View job
-                  </button>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <h3>No posts found</h3>
-        )}
-      </div>
-      {posts ? (
-        <div className="pagination">
-          <button
-            onClick={(e) => {
-              --pageRef.current;
-              getAllJobs();
-              window.scrollTo(0, 0);
-            }}
-          >
-            <FiArrowLeft className="Arrow" />
-          </button>
-
-          <ul className="pages">
-            {totalPages.map((el) => {
-              return (
-                <li
-                  id={el}
-                  key={el}
-                  onClick={(e) => {
-                    pageRef.current = e.target.id;
-                    getAllJobs();
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  {el}
-                </li>
               );
-            })}
-          </ul>
-          <button
-            onClick={(e) => {
-              ++pageRef.current;
-              getAllJobs();
-              window.scrollTo(0, 0);
-            }}
-          >
-            <FiArrowRight className="Arrow" />
-          </button>
+            })
+          ) : (
+            <h5 className="failed">No posts found.</h5>
+          )}
         </div>
-      ) : (
-        <></>
-      )}
-      <div className={success ? "applyMsg" : "hide"}>
-        <div className="Msg">
-          <p>{success}</p>
+        {posts ? (
+          <div className="pagination">
+            {pageRef.current == totalPages[0] ? (
+              <></>
+            ) : (
+              <button
+                onClick={(e) => {
+                  --pageRef.current;
+                  getAllJobs();
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <FiArrowLeft className="Arrow" />
+              </button>
+            )}
+
+            <ul className="pages">
+              {totalPages.map((el) => {
+                return (
+                  <li
+                    id={el}
+                    key={el}
+                    onClick={(e) => {
+                      pageRef.current = e.target.id;
+                      getAllJobs();
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    {el}
+                  </li>
+                );
+              })}
+            </ul>
+            {pageRef.current == totalPages.length ? (
+              <></>
+            ) : (
+              <button
+                onClick={(e) => {
+                  ++pageRef.current;
+                  getAllJobs();
+                  window.scrollTo(0, 0);
+                }}
+              >
+                <FiArrowRight className="Arrow" />
+              </button>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className={success ? "applyMsg" : "hide"}>
+          <div className="Msg">
+            <p>{success}</p>
+          </div>
+        </div>
+        <div className={fault ? "faultMsg" : "hide"}>
+          <div className="Msg">
+            <p>{fault}</p>
+          </div>
         </div>
       </div>
     </div>

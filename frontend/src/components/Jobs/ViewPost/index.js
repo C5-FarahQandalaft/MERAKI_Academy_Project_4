@@ -22,6 +22,7 @@ const ViewPost = ({ token, postId }) => {
   const writeRef = useRef("");
   //apply to job
   const [success, setSuccess] = useState("");
+  const [fault, setFault] = useState("");
 
   //navigate
   const navigate = useNavigate();
@@ -170,15 +171,16 @@ const ViewPost = ({ token, postId }) => {
         )
         .then((result) => {
           setSuccess(result.data.message);
+
           setTimeout(() => {
             setSuccess("");
           }, 800);
           getPost();
         })
         .catch((err) => {
-          setSuccess(err.response.data.message);
+          setFault(err.response.data.message);
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
         });
     }
@@ -197,16 +199,17 @@ const ViewPost = ({ token, postId }) => {
           }
         )
         .then((result) => {
-          setSuccess(result.data.message);
+          setFault(result.data.message);
+
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
           getPost();
         })
         .catch((err) => {
-          setSuccess(err.response.data.message);
+          setFault(err.response.data.message);
           setTimeout(() => {
-            setSuccess("");
+            setFault("");
           }, 800);
         });
     }
@@ -255,18 +258,17 @@ const ViewPost = ({ token, postId }) => {
             <h3>Job title : </h3>
             <p>{post.title}</p>
           </div>
-          <div className="singleInfo">
-            <h3>Job description : </h3>
-            <p>{post.description}</p>
-          </div>
 
           {post.url ? (
-            <div className="info">
+            <div className="singleInfo">
               <h3>Job description : </h3>
               <img src={post.url} />
             </div>
           ) : (
-            <></>
+            <div className="singleInfo">
+              <h3>Job description : </h3>
+              <p>{post.description}</p>
+            </div>
           )}
 
           <div className="singleInfo">
@@ -306,6 +308,24 @@ const ViewPost = ({ token, postId }) => {
         </div>
       </div>
       <div className="applyDiv">
+        {typeOfUser === "employee" ? (
+          applicants.includes(userId) ? (
+            <button
+              id={post._id}
+              className="withdrawViewBtn"
+              onClick={withdrawJob}
+            >
+              <FiMinus id={post._id} className="plus" />
+              Withdraw job
+            </button>
+          ) : (
+            <button id={post._id} className="applyViewBtn" onClick={applyToJob}>
+              <FiPlus id={post._id} className="plus" /> Apply to job
+            </button>
+          )
+        ) : (
+          <></>
+        )}
         <div className="commentDiv">
           <h3>Comments :</h3>
           {comments &&
@@ -364,7 +384,7 @@ const ViewPost = ({ token, postId }) => {
                     el.commenterCompany ? (
                       el.commenterCompany._id === userId ? (
                         company === companyName ? (
-                          <div className="commentBtn" style={{ height: "40%" }}>
+                          <div className="adminDiv">
                             <FiEdit
                               id={el._id}
                               onClick={updateComment}
@@ -426,27 +446,15 @@ const ViewPost = ({ token, postId }) => {
           )}
         </div>
 
-        {typeOfUser === "employee" ? (
-          applicants.includes(userId) ? (
-            <button
-              id={post._id}
-              className="withdrawViewBtn"
-              onClick={withdrawJob}
-            >
-              <FiMinus id={post._id} className="plus" />
-              Withdraw job
-            </button>
-          ) : (
-            <button id={post._id} className="applyViewBtn" onClick={applyToJob}>
-              <FiPlus id={post._id} className="plus" /> Apply to job
-            </button>
-          )
-        ) : (
-          <></>
-        )}
         <div className={success ? "applyMsg" : "hide"}>
           <div className="Msg">
             <p>{success}</p>
+          </div>
+        </div>
+
+        <div className={fault ? "faultMsg" : "hide"}>
+          <div className="Msg">
+            <p>{fault}</p>
           </div>
         </div>
       </div>

@@ -7,17 +7,17 @@ const Registerbar = () => {
       <Link className="link" to="/">
         Home
       </Link>
+      <Link className="link" to="/About">
+        About
+      </Link>
       <Link className="link" to="/jobs/search">
-        Search jobs
+        Search
       </Link>
       <Link className="link" to="/login">
         Login
       </Link>
-      <Link className="link" to="/register/company">
-        Register as Company
-      </Link>
-      <Link className="link" to="/register/employee">
-        Register as Employee
+      <Link className="link" to="/register">
+        Register
       </Link>
     </div>
   );

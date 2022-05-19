@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-
 import { tokenContext, isLoggedInContext } from "../../../../App";
 
 const EmployeeIn = () => {
@@ -21,10 +20,10 @@ const EmployeeIn = () => {
         Home
       </Link>
       <Link className="link" to="/jobs/search">
-       Search jobs
+        Search
       </Link>
       <Link className="link" to="/appliedjobs">
-      Applied jobs
+        Applications
       </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout

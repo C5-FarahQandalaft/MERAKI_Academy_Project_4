@@ -90,7 +90,7 @@ const getAllJobs = (req, res) => {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
-          jobs: jobs,
+          jobs: jobs.reverse(),
         });
       } else {
         res.status(200).json({
@@ -110,7 +110,7 @@ const getAllJobs = (req, res) => {
 
 //this function returns paginated jobs
 const getPaginate = (req, res) => {
-  const { page = 1, limit = 4 } = req.query;
+  const { page = 1, limit = 9 } = req.query;
 
   Post.find({})
     .limit(limit * 1)
@@ -144,7 +144,7 @@ const getPaginate = (req, res) => {
         res.status(200).json({
           success: true,
           message: `All the jobs`,
-          jobs: jobs,
+          jobs: jobs.reverse(),
           totalPages: Math.ceil(count / limit),
           currentPage: page,
         });

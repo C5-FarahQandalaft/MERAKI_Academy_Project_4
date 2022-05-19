@@ -1,6 +1,26 @@
-.wrong {
-  background-color: rgba(255, 0, 0, 0.561);
-  margin: 0px 0;
-  padding: 10px 10px;
-  font-size: 14px;
+.employeeLog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2%;
+  color: orangered;
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652880157/undraw_Freelancer_re_irh4_pfzaox.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 49.2vw;
+}
+
+.companyLog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2%;
+  color: orangered;
+  border-left: 2px solid rgba(22, 22, 253, 0.281);
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652911863/undraw_remotely_2j6y_psij9z.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 49.5vw;
 }

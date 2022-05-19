@@ -21,13 +21,13 @@ const CompanyIn = () => {
         Home
       </Link>
       <Link className="link" to="/jobs/search">
-       Search jobs
+       Search
       </Link>
       <Link className="link" to="/postedjobs">
-        Posted jobs
+       My jobs
       </Link>
       <Link className="link" to="/create/post">
-        Create Post
+        Create post
       </Link>
       <Link className="link" to="/" onClick={logout}>
         Logout

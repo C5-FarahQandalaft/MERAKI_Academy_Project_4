@@ -108,146 +108,170 @@ const UpdatePost = ({ token, postId }) => {
       });
   }, []);
 
+  //call-back to close pop
+  const close = () => {
+    navigate(-1);
+  };
+
   return (
-    <form className="postContainer">
-      <label>Job title</label>
+    <div className="creatContainer">
+      <div className="createMain">
+        <div className="postContainer">
+          <div className="closingDiv">
+            <button className="closeCreateBtn" onClick={close}>
+              &times;
+            </button>
+          </div>
+          <label>Job title</label>
 
-      <input
-        defaultValue={post.title}
-        type="text"
-        onChange={(e) => {
-          setTitle(e.target.value);
-          setResult("");
-        }}
-      />
+          <input
+            defaultValue={post.title}
+            type="text"
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setResult("");
+            }}
+          />
 
-      <label>Job description</label>
+          <label>Job description</label>
 
-      <textarea
-        defaultValue={post.description}
-        onChange={(e) => {
-          setDescription(e.target.value);
-          setResult("");
-        }}
-      ></textarea>
+          <textarea
+            defaultValue={post.description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              setResult("");
+            }}
+          ></textarea>
 
-      <label>Image description</label>
+          <label>Image description</label>
 
-      <input
-        type="file"
-        onChange={(e) => {
-          setImage(e.target.files[0]);
-        }}
-      ></input>
-      <button onClick={uploadImage}>Upload</button>
+          <input
+            type="file"
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+            }}
+          ></input>
+          <button onClick={uploadImage}>Upload</button>
 
-      <h5>Uploaded image will be displayed here</h5>
-      <img src={url} />
-      <label>Experience</label>
-      <select
-        onChange={(e) => {
-          setExperience(e.target.value);
-          setResult("");
-        }}
-      >
-        <option>Please Select</option>
-        <option>Entry-level</option>
-        <option>Intermediate</option>
-        <option>Mid-level</option>
-        <option>Senior-level</option>
-      </select>
+          <h5>Uploaded image will be displayed here</h5>
+          <img src={url} />
+          <label>Experience</label>
+          <select
+            onChange={(e) => {
+              setExperience(e.target.value);
+              setResult("");
+            }}
+          >
+            <option>Please Select</option>
+            <option>Entry-level</option>
+            <option>Intermediate</option>
+            <option>Mid-level</option>
+            <option>Senior-level</option>
+          </select>
 
-      <label>Salary</label>
-      <div className="salary">
-        <input
-          ref={salaryInputRef}
-          type="number"
-          onChange={(e) => {
-            setResult("");
-          }}
-        />
-        <select
-          ref={salaryCurrencyRef}
-          onChange={(e) => {
-            setResult("");
-          }}
-        >
-          <option>Select</option>
-          <option>USD</option>
-          <option>EUR</option>
-          <option>JPY</option>
-          <option>GBP</option>
-          <option>CHF</option>
-          <option>CAD</option>
-          <option>AED</option>
-          <option>JOD</option>
-          <option>SAR</option>
-        </select>
+          <label>Salary</label>
+          <div className="salary">
+            <input
+              ref={salaryInputRef}
+              type="number"
+              onChange={(e) => {
+                setResult("");
+              }}
+            />
+            <select
+              ref={salaryCurrencyRef}
+              onChange={(e) => {
+                setResult("");
+              }}
+            >
+              <option>Select</option>
+              <option>USD</option>
+              <option>EUR</option>
+              <option>JPY</option>
+              <option>GBP</option>
+              <option>CHF</option>
+              <option>CAD</option>
+              <option>AED</option>
+              <option>JOD</option>
+              <option>SAR</option>
+            </select>
+          </div>
+
+          <label>Job type</label>
+
+          <select
+            onChange={(e) => {
+              e.target.value
+                ? e.target.value.includes("Select")
+                  ? setResult("Select one of the options")
+                  : setType(e.target.value)
+                : setResult("Select one of the options");
+              setResult("");
+            }}
+          >
+            <option>Please Select</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>internship</option>
+          </select>
+
+          <label>Location</label>
+
+          <input
+            defaultValue={post.location}
+            type="text"
+            onChange={(e) => {
+              setLocation(e.target.value);
+              setResult("");
+            }}
+          />
+
+          <label>Remote</label>
+          <select
+            onChange={(e) => {
+              e.target.value === "Yes" ? setRemote(true) : setRemote(false);
+
+              setResult("");
+            }}
+          >
+            <option>Please Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+
+          <label>Available</label>
+
+          <select
+            onChange={(e) => {
+              e.target.value === "Yes"
+                ? setAvailable(true)
+                : setAvailable(false);
+
+              setResult("");
+            }}
+          >
+            <option>Please Select</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+          <button onClick={(e) => handleUpdate(e)}>Submit</button>
+          <div className="note">
+            <h5>Note :</h5>
+            <p>- You should enter the salary value</p>
+          </div>
+        </div>
+        {result ? (
+          <div className={result ? "check" : "success"}>
+            <div className="msgCenter">
+              <p className="Message">{result}</p>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
-
-      <label>Job type</label>
-
-      <select
-        onChange={(e) => {
-          e.target.value
-            ? e.target.value.includes("Select")
-              ? setResult("Select one of the options")
-              : setType(e.target.value)
-            : setResult("Select one of the options");
-          setResult("");
-        }}
-      >
-        <option>Please Select</option>
-        <option>Full-time</option>
-        <option>Part-time</option>
-        <option>Contract</option>
-        <option>internship</option>
-      </select>
-
-      <label>Location</label>
-
-      <input
-        defaultValue={post.location}
-        type="text"
-        onChange={(e) => {
-          setLocation(e.target.value);
-          setResult("");
-        }}
-      />
-
-      <label>Remote</label>
-      <select
-        onChange={(e) => {
-          e.target.value === "Yes" ? setRemote(true) : setRemote(false);
-
-          setResult("");
-        }}
-      >
-        <option>Please Select</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-
-      <label>Available</label>
-
-      <select
-        onChange={(e) => {
-          e.target.value === "Yes" ? setAvailable(true) : setAvailable(false);
-
-          setResult("");
-        }}
-      >
-        <option>Please Select</option>
-        <option>Yes</option>
-        <option>No</option>
-      </select>
-      <button onClick={(e) => handleUpdate(e)}>Submit</button>
-      <div className="note">
-        <h5>Note :</h5>
-        <p>- You should enter the salary value</p>
-      </div>
-      <p className={result ? "wrong" : ""}>{result}</p>
-    </form>
+    </div>
   );
 };
 

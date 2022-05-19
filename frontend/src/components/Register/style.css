@@ -1,92 +1,58 @@
-.regContainer {
-  width: 250px;
-  margin-right: 50px;
+.registerContainer {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 2, auto;
+  grid-template-areas: "left left" "right right";
+}
+
+.registerContainer h2 {
+  font-size: 2em;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.employeeReg {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  right: 0;
-  top: 7%;
-  border: 2px solid rgba(25, 25, 25, 0.846);
-  border-radius: 5px;
+  align-items: center;
+  padding-top: 2%;
+  color: orangered;
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652870788/undraw_Personal_file_re_5joy_wuvn3l.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  height: 100vh;
 }
 
-.regContainer h3 {
-  padding: 0 10px;
-  font-weight: 500;
-  height: 30px;
-  border-bottom: 2px solid green;
-  margin: 2px 0px;
-  cursor: default;
-}
-
-.regContainer label {
-  font-size: 16px;
-  padding: 2px 10px;
-}
-
-.regContainer input {
-  padding: 2px 3px;
-  margin: 0 10px;
-  border-radius: 3px;
-  border: 1px solid;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  appearance: none;
-}
-
-.regContainer button {
-  background-color: green;
-  /* margin-top: 15px;
-  margin-left: 10px; */
-  border-style: none;
-  margin: 10px 10px;
-  width: 80px;
-  height: 35px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.regContainer button:hover {
+.linkEmployee:hover {
   transform: scale(1.03);
 }
 
-.closing {
-  position: relative;
-  height: 20px;
+.companyReg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2%;
+  color: orangered;
+  border-left: 2px solid rgba(22, 22, 253, 0.281);
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652870733/undraw_feeling_proud_qne1_wzebu8.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
-.closing button {
-  height: 20px;
-  width: 20px;
-  margin-top: 18px;
-  margin-right: 3px;
-  background-color: transparent;
-  font-size: large;
-  position: absolute;
-  top: -90%;
-  right: 0%;
+.linkReg {
+  margin: 2% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 5px;
+  height: 6%;
+  width: 30%;
+  background-color: rgb(22, 22, 253);
+  text-decoration: none;
 }
 
-.close {
-  display: none;
-}
-
-.message {
-  background-color: rgba(255, 0, 0, 0.561);
-  margin: 0px 0;
-  padding: 10px 10px;
-  font-size: 14px;
-}
-
-.error {
-  background-color: rgba(255, 0, 0, 0.398);
-}
-
-.success {
-  background-color: rgba(0, 128, 0, 0.489);
-  margin: 0px 0;
-  padding: 10px 10px;
-  font-size: 14px;
+.linkReg:hover {
+  transform: scale(1.03);
 }

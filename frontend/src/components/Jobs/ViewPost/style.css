@@ -1,88 +1,78 @@
 .singleMainContainer {
-  width: 100%;
+  grid-area: main;
+  min-height: 100vh;
   display: grid;
-
-  display: flex;
-  justify-content: center;
+  grid-template-areas: "p p";
 }
 
 .singleContainer {
-  width: 35%;
+  height: 130vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  width: 40em;
 }
 
 .singlePost {
-  border: 2px solid rgba(25, 25, 25, 0.846);
-  padding: 0px 0.7%;
+  margin-top: 2%;
+  height: 90%;
+  background-color: rgb(195, 195, 195);
+  width: 30vw;
   border-radius: 5px;
-  background-color: rgba(211, 211, 211, 0.216);
+  box-shadow: 0 1px 9px rgba(0, 0, 255, 0.585);
+}
+
+.singlePost h2 {
+  padding: 0 2%;
+  padding: 0 2%;
+  font-weight: 500;
+  margin: 1% 0;
 }
 
 .singleInfo {
-  display: flex;
-  flex-direction: column;
-  padding: 0.6% 0;
-  width: 28vw;
-
-  border-bottom: 1px solid rgba(0, 0, 0, 0.257);
+  border-bottom: 1px solid rgba(128, 128, 128, 0.429);
+  padding: 0 1%;
 }
 
 .singleInfo:last-child {
+  padding-bottom: 2%;
   border-style: none;
-  padding-bottom: 1%;
 }
 
 .singleInfo h3 {
   font-size: 1.1em;
-  margin-top: 2%;
-  margin-left: 0.7%;
+  margin-top: 3%;
+  margin-left: 1%;
   font-weight: 500;
   cursor: default;
 }
 
 .singleInfo p {
-  margin-top: 2%;
+  margin: 2% 1%;
   font-size: 0.9em;
-  margin-left: 0.7%;
-  line-height: 1.2em;
-  cursor: default;
 }
 
 .commentDiv {
-  border: 1px solid rgba(0, 0, 0, 0.257);
-  border-radius: 5px;
-  margin-top: 5%;
-  margin-left: 2%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  width: 40vw;
-  height: 70vh;
+  height: 100%;
+  margin-top: 2%;
 }
 
 .commentDiv h3 {
-  position: absolute;
-  bottom: 100%;
-  left: 1%;
+  border-bottom: 1px orangered solid;
 }
 
 .commentSection {
-  margin: 2% 0;
-  width: 90%;
+  margin-top: 2%;
+  width: 20vw;
+  height: 10vh;
   position: relative;
-  right: 3%;
 }
 
 .commentSection textarea {
-  width: 100%;
-  height: 11vh;
-  padding: 2px 3px;
-  margin: 1px 10px;
+  width: 20vw;
+  height: 10vh;
+  padding: 1% 1%;
+  /* margin: 0 2.2%; */
   border-radius: 5px;
   border: 1px solid;
   resize: none;
@@ -91,8 +81,8 @@
 .commentSection button {
   color: white;
   position: absolute;
-  bottom: 13%;
-  right: 0%;
+  bottom: 10%;
+  right: 2%;
   height: 1.7em;
   width: 1.7em;
   border-radius: 50%;
@@ -101,19 +91,15 @@
   background-color: rgb(0, 0, 157);
 }
 
-.send-icon {
-  width: 1.2em;
-  height: 1.2em;
-  border-radius: 30%;
-}
-
-.commentSection button:hover {
+.commentSection button:active {
   transform: scale(1.03);
+  background-color: orangered;
+  color: black;
 }
 
 .showComment {
   margin: 1% 0;
-  width: 75%;
+  width: 25vw;
   display: flex;
 }
 
@@ -128,24 +114,27 @@
   font-size: 0.8em;
   padding-left: 2%;
   padding-top: 0.5%;
-  border: 1px solid green;
+  border: 1px solid blue;
   border-radius: 5px;
   height: 10vh;
-  width: 22vw;
+  width: 20vw;
 }
 
 .commentBtn {
   margin-top: 6%;
-  height: 80%;
+  height: 10vh;
+  width: 5vw;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .editComment {
   background-color: transparent;
-  height: 55%;
-  width: 55%;
+  height: 1.2em;
+  width: 1.2em;
+  margin-right: 20%;
   border-style: none;
   cursor: pointer;
   border-radius: 5px;
@@ -158,8 +147,8 @@
 
 .deleteComment {
   background-color: transparent;
-  height: 55%;
-  width: 55%;
+  height: 1.2em;
+  width: 1.2em;
   border-style: none;
   cursor: pointer;
   border-radius: 5px;
@@ -171,31 +160,32 @@
 }
 
 .adminDiv {
-  position: absolute;
-  margin-top: 14%;
-  margin-left: 1.5%;
-  height: 5%;
-  left: 78%;
-
+  margin-top: 6%;
+  height: 10vh;
+  width: 5vw;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .adminEdit {
   background-color: transparent;
-  height: 70%;
-  width: 60%;
+  height: 1.1em;
+  width: 1.1em;
   border-style: none;
   cursor: pointer;
   border-radius: 5px;
   color: blue;
 }
 
+.adminEdit:hover {
+  transform: scale(1.03);
+}
+
 .adminDelete {
   background-color: transparent;
-  height: 80%;
-  width: 60%;
+  height: 1.1em;
+  width: 1.1em;
   border-style: none;
   cursor: pointer;
   border-radius: 5px;
@@ -225,33 +215,34 @@
 .updateComment textarea {
   margin-top: 2%;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.8em;
   padding-left: 2%;
-  padding-top: 0.5%;
-  border: 1px solid red;
+  border: 2px solid orangered;
   border-radius: 5px;
-  height: 10.3vh;
   width: 20vw;
+  height: 10.4vh;
   resize: none;
 }
 
 .applyDiv {
-  width: 40%;
+  height: 100%;
+  width: 40em;
+  display: flex;
+  flex-direction: column;
 }
 
 .applyViewBtn {
-  margin-top: 5%;
-  margin-left: 2%;
+  margin: 2% 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1%;
   border-radius: 5px;
   border-style: none;
   background-color: blue;
   color: white;
   padding: 0 1%;
-  height: 6%;
-  width: 25%;
+  height: 4em;
+  width: 12em;
   font-size: 0.8em;
   cursor: pointer;
 }
@@ -261,18 +252,18 @@
 }
 
 .withdrawViewBtn {
-  margin-top: 5%;
-  margin-left: 2%;
+  margin: 2% 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1%;
   border-radius: 5px;
   border-style: none;
   background-color: red;
   color: white;
   padding: 0 1%;
-  height: 6%;
-  width: 25%;
+  height: 4em;
+  width: 12em;
   font-size: 0.8em;
   cursor: pointer;
 }

@@ -51,53 +51,67 @@ export const LoginCompany = () => {
 
   //return for Login function
   return (
-    <div className="regContainer">
-      <div className="closing">
-        <button className="closeBtn" onClick={close}>
-          &times;
-        </button>
+    <div className="regMainContainer">
+      <div className="logContainer">
+        <div className="closing">
+          <button className="closeBtn" onClick={close}>
+            &times;
+          </button>
+        </div>
+        <h3>Ready to hire?</h3>
+        {error === "all" ? (
+          <label>Email*</label>
+        ) : error.includes("email") ? (
+          <label>Email*</label>
+        ) : (
+          <label>Email</label>
+        )}
+        <input
+          type="email"
+          placeholder="Email"
+          className={
+            error === "all" ? "error" : error.includes("email") ? "error" : ""
+          }
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setSignedIn("");
+            setError("");
+          }}
+        />
+        {error === "all" ? (
+          <label>Password*</label>
+        ) : error.includes("password") ? (
+          <label>Password*</label>
+        ) : (
+          <label>Password</label>
+        )}
+        <input
+          type="password"
+          className={
+            error === "all"
+              ? "error"
+              : error.includes("password")
+              ? "error"
+              : ""
+          }
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setSignedIn("");
+            setError("");
+          }}
+        />
+        <button onClick={signIn}>Login</button>
       </div>
-      <h3>Ready to hire?</h3>
-      {error === "all" ? (
-        <label>Email*</label>
-      ) : error.includes("email") ? (
-        <label>Email*</label>
+      {signedIn ? (
+        <div className={error ? "check" : "success"}>
+          <div className="msgCenter">
+            <p className="Message">{signedIn}</p>
+          </div>
+        </div>
       ) : (
-        <label>Email</label>
+        <></>
       )}
-      <input
-        type="email"
-        placeholder="Email"
-        className={
-          error === "all" ? "error" : error.includes("email") ? "error" : ""
-        }
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setSignedIn("");
-          setError("");
-        }}
-      />
-      {error === "all" ? (
-        <label>Password*</label>
-      ) : error.includes("password") ? (
-        <label>Password*</label>
-      ) : (
-        <label>Password</label>
-      )}
-      <input
-        type="password"
-        className={
-          error === "all" ? "error" : error.includes("password") ? "error" : ""
-        }
-        placeholder="Password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-          setSignedIn("");
-          setError("");
-        }}
-      />
-      <button onClick={signIn}>Login</button>
-      <p className={signedIn ? "wrong" : ""}>{signedIn}</p>
     </div>
   );
 };

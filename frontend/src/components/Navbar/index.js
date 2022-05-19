@@ -20,16 +20,19 @@ export const Navbar = ({ token }) => {
     : (typeOfUser = "Not User");
 
   return (
-    <div>
-      {isLoggedIn ? (
-        typeOfUser === "employee" ? (
-          <EmployeeIn />
+    <div className="header">
+      <h2>Seeker</h2>
+      <div className="headerBtn">
+        {isLoggedIn ? (
+          typeOfUser === "employee" ? (
+            <EmployeeIn />
+          ) : (
+            <CompanyIn />
+          )
         ) : (
-          <CompanyIn />
-        )
-      ) : (
-        <Registerbar />
-      )}
+          <Registerbar />
+        )}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,41 @@
+.footerContainer {
+  background-color: rgba(128, 128, 128, 0.563);
+}
+.copyRights {
+  margin-left: 2%;
+  margin-top: 1%;
+}
+
 .footer {
-  background-color: orangered;
   width: 100%;
   height: 6vh;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.footerLinks {
+  margin-top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1em;
+}
+
+.linkFooter {
+  text-decoration: none;
+  color: black;
+  font-size: 0.9em;
+  height: 3.3em;
+  width: 5em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linkFooter:hover {
+  transform: scale(1.01);
+  border-top: 1px solid darkblue;
+  color: darkblue;
 }

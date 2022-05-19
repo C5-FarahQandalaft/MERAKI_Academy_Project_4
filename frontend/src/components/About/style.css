@@ -1,0 +1,73 @@
+.About {
+  grid-area: main;
+  position: relative;
+  display: grid;
+  grid-template-areas: "left left";
+  height: 100vh;
+}
+
+.backgroundAbout {
+  position: absolute;
+  right: 0%;
+  background-image: url("https://res.cloudinary.com/dtiuiyrdu/image/upload/v1652884890/undraw_Team_spirit_re_yl1v_llmsvs.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 80vw;
+  z-index: -1;
+}
+
+.AboutUs {
+  height: 100vh;
+  position: absolute;
+  left: 2%;
+}
+
+.centerAbout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.AboutFirstMsg {
+  display: flex;
+  flex-direction: column;
+  gap: 2%;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  color: orangered;
+  width: 50%;
+}
+
+.AboutFirstMsg h1 {
+  font-size: 2em;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.AboutFirstMsg h4 {
+  font-size: 0.8em;
+  color: rgba(22, 22, 253, 0.904);
+}
+
+.AboutSecondMsg {
+  display: flex;
+  justify-content: flex-start;
+
+  flex-direction: column;
+  width: 50%;
+  gap: 2%;
+  align-items: flex-start;
+  color: orangered;
+}
+
+.AboutSecondMsg h1 {
+  font-size: 2em;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.AboutSecondMsg h4 {
+  font-size: 0.8em;
+  color: rgba(22, 22, 253, 0.904);
+}
