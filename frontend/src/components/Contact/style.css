@@ -134,4 +134,9 @@ input::-webkit-inner-spin-button {
   color: rgb(21, 21, 255);
   height: 5vh;
   width: 4vh;
+  cursor: pointer;
+}
+
+.media:hover {
+  transform: scale(1.03);
 }
