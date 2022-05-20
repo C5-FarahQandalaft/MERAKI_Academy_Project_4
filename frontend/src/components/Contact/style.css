@@ -122,3 +122,16 @@ input::-webkit-inner-spin-button {
   color: green;
   margin-left: 1%;
 }
+
+.contacts {
+  display: flex;
+  height: 5vh;
+  align-items: center;
+}
+
+.media {
+  margin-top: 3%;
+  color: rgb(21, 21, 255);
+  height: 5vh;
+  width: 4vh;
+}

@@ -1,7 +1,12 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./style.css";
-import { AiFillCheckCircle } from "react-icons/ai";
+import {
+  AiFillCheckCircle,
+  AiFillFacebook,
+  AiFillLinkedin,
+  AiFillTwitterSquare,
+} from "react-icons/ai";
 
 const Contact = () => {
   const form = useRef();
@@ -53,6 +58,11 @@ const Contact = () => {
               Send
             </button>
           </form>
+          <div className="contacts">
+            <AiFillFacebook className="media" />
+            <AiFillTwitterSquare className="media" />
+            <AiFillLinkedin className="media" />
+          </div>
         </div>
       </div>
       <div className="contactBackground"></div>
