@@ -214,21 +214,16 @@ const AllJobs = ({ token }) => {
                           <h3>Job type : </h3>
                           <p>{element.type}</p>
                         </div>
-
-                        <div className="info">
-                          <h3>Appliacants : </h3>
-                          <p>{element.applicants.length}</p>
-                        </div>
-
-                        <div className="info">
-                          <h3>Remote : </h3>
-                          <p>{element.remote ? "Yes" : "No"}</p>
-                        </div>
                       </>
                     )}
+
                     <div className="info">
                       <h3>Appliacants : </h3>
                       <p>{element.applicants.length}</p>
+                    </div>
+                    <div className="info">
+                      <h3>Remote : </h3>
+                      <p>{element.remote ? "Yes" : "No"}</p>
                     </div>
                     <div className="info">
                       <h3>Available : </h3>
